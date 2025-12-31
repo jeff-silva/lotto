@@ -1,0 +1,21 @@
+{
+  "name": "lotto",
+  "version": "1.0.0",
+  "description": "Probabilidade Lotérica",
+  "main": "index.js",
+  "scripts": {
+    "dev": "sh ./bin/dev.sh"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeff-silva/lotto.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/jeff-silva/lotto/issues"
+  },
+  "homepage": "https://github.com/jeff-silva/lotto#readme"
+}
