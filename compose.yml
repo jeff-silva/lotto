@@ -1,62 +1,49 @@
-# name: watchzap
+name: lotto
 
-# include:
-#   - ./service-supabase/src/docker-compose.yml
+include:
+  - ./service-supabase/src/docker-compose.yml
 
-# services:
-#   service-front:
-#     image: node:22
-#     expose: [3000]
-#     networks: [main_network]
-#     env_file: ./service-front/src/.env
-#     working_dir: /app
-#     command: sh -c "npm install && npm run dev"
-#     volumes:
-#       - ./service-front/src:/app
+services:
+  # service-front:
+  #   image: node:22
+  #   expose: [3000]
+  #   networks: [main_network]
+  #   env_file: ./service-front/src/.env
+  #   working_dir: /app
+  #   command: sh -c "npm install && npm run dev"
+  #   volumes:
+  #     - ./service-front/src:/app
+ 
+  service-npm:
+    image: jc21/nginx-proxy-manager:latest
+    restart: unless-stopped
+    networks: [main_network]
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - service_npm_volume:/data
+      - ./service-npm/letsencrypt:/etc/letsencrypt
 
-#   service-npm:
-#     image: jc21/nginx-proxy-manager:latest
-#     restart: unless-stopped
-#     networks: [main_network]
-#     ports:
-#       - 80:80
-#       - 81:81
-#       - 443:443
-#     volumes:
-#       - service_npm_volume:/data
-#       - ./service-npm/letsencrypt:/etc/letsencrypt
+  # service-app:
+  #   build: ./service-app
+  #   restart: unless-stopped
+  #   networks: [main_network]
+  #   expose: [80]
+  #   volumes:
+  #     - ./service-app/src:/app
+  #   environment:
+  #     SERVICE_APP_INIT: ${SERVICE_APP_INIT}
 
-#   service-app:
-#     build: ./service-app
-#     restart: unless-stopped
-#     networks: [main_network]
-#     expose: [80]
-#     volumes:
-#       - ./service-app/src:/app
-#     environment:
-#       SERVICE_APP_INIT: ${SERVICE_APP_INIT}
+  # service-app-schedule:
+  #   extends: service-app
+  #   environment:
+  #     SERVICE_APP_INIT: php artisan schedule:work
 
-#   service-app-schedule:
-#     extends: service-app
-#     environment:
-#       SERVICE_APP_INIT: php artisan schedule:work
+networks:
+  main_network:
+    name: main_network
 
-#   service-redis:
-#     image: redis:7-alpine
-#     networks: [main_network]
-#     expose: [6379]
-
-#   service-waha:
-#     image: devlikeapro/waha
-#     env_file: ./service-waha/.env
-#     networks: [main_network]
-#     expose: [3000]
-#     volumes:
-#       - ./service-waha/.sessions:/app/.sessions
-
-# networks:
-#   main_network:
-#     name: main_network
-
-# volumes:
-#   service_npm_volume:
+volumes:
+  service_npm_volume:
