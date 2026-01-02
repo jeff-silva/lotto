@@ -26,20 +26,20 @@ services:
       - service_npm_volume:/data
       - ./service-npm/letsencrypt:/etc/letsencrypt
 
-  # service-app:
-  #   build: ./service-app
-  #   restart: unless-stopped
-  #   networks: [main_network]
-  #   expose: [80]
-  #   volumes:
-  #     - ./service-app/src:/app
-  #   environment:
-  #     SERVICE_APP_INIT: ${SERVICE_APP_INIT}
+  service-app:
+    build: ./service-app
+    restart: unless-stopped
+    networks: [main_network]
+    expose: [80]
+    volumes:
+      - ./service-app/src:/app
+    environment:
+      SERVICE_APP_INIT: ${SERVICE_APP_INIT}
 
-  # service-app-schedule:
-  #   extends: service-app
-  #   environment:
-  #     SERVICE_APP_INIT: php artisan schedule:work
+  service-app-schedule:
+    extends: service-app
+    environment:
+      SERVICE_APP_INIT: php artisan schedule:work
 
 networks:
   main_network:
