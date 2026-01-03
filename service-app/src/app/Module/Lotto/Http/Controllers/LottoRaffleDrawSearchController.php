@@ -15,4 +15,14 @@ class LottoRaffleDrawSearchController extends RouterController
   {
     return $request->all();
   }
+
+  public static function openApiParams()
+  {
+    return [
+      [
+        'name' => 'page',
+        'in' => 'query',
+      ],
+    ];
+  }
 }

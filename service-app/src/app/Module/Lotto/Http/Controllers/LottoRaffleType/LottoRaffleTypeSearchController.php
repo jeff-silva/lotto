@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Module\Lotto\Http\Controllers;
+namespace App\Module\Lotto\Http\Controllers\LottoRaffleType;
 
 use Illuminate\Http\Request;
 use App\Addon\Router\RouterController;
