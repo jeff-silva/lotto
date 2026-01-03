@@ -12,10 +12,11 @@ class LottoRaffleTypeMigrator extends Migrator
   {
     return [
       'id' => fn($table) => $table->id(),
-      'name' => fn($table) => $table->string('name'),
+      'slug' => fn($table) => $table->string('slug')->nullable(),
+      'name' => fn($table) => $table->string('name')->nullable(),
       'created_at' => fn($table) => $table->dateTime('created_at'),
       'updated_at' => fn($table) => $table->dateTime('updated_at'),
-      'deleted_at' => fn($table) => $table->dateTime('deleted_at'),
+      'deleted_at' => fn($table) => $table->dateTime('deleted_at')->nullable(),
     ];
   }
 }

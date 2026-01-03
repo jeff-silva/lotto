@@ -17,9 +17,11 @@ class LottoRaffleDrawMigrator extends Migrator
         ->constrained('public.lotto_raffle_type')
         ->onUpdate('cascade')
         ->onDelete('cascade'),
-      'number' => fn($table) => $table->integer('number'),
-      'result' => fn($table) => $table->jsonb('result'),
-      'date' => fn($table) => $table->dateTime('date'),
+      'number' => fn($table) => $table->integer('number')->nullable(),
+      'result' => fn($table) => $table->jsonb('result')->nullable(),
+      'date' => fn($table) => $table->dateTime('date')->nullable(),
+      'created_at' => fn($table) => $table->dateTime('created_at'),
+      'updated_at' => fn($table) => $table->dateTime('updated_at'),
     ];
   }
 }

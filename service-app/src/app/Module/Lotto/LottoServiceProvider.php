@@ -13,6 +13,8 @@ class LottoServiceProvider extends ServiceProvider
 
   public function boot(): void
   {
-    // 
+    $this->commands([
+      \App\Module\Lotto\Console\Commands\LottoImportCommand::class,
+    ]);
   }
 }
