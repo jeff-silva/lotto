@@ -42,6 +42,7 @@ class RouterServiceProvider extends ServiceProvider
       $route = Route::match($c->methods, $c->route, $file->class);
       $route->name(preg_replace('/Controller$/', '', class_basename($file->class)));
       $route->middleware($c->middlewares);
+      $route->defaults('openapi', call_user_func([$file->class, 'getOpenApi']));
     }
 
     $this->loadViewsFrom(app_path('Addon/Router/Views'), 'addon.router');
