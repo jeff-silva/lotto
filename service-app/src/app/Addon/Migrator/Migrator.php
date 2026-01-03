@@ -13,7 +13,7 @@ class Migrator
 {
   public $table = '';
   public $depends_on = [];
-  public $active = true;
+  public $enabled = true;
 
   public function fields()
   {
@@ -53,6 +53,9 @@ class Migrator
         $class = preg_replace('/.php$/', '', $class);
         $class = str_replace('/', '\\', $class);
         return app($class);
+      })
+      ->filter(function ($migrator) {
+        return $migrator->enabled;
       })
       ->values()
       ->toArray();

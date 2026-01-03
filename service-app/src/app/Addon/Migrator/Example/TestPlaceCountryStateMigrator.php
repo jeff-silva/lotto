@@ -8,6 +8,7 @@ class TestPlaceCountryStateMigrator extends Migrator
 {
   public $table = 'public.test_place_country_state';
   public $depends_on = ['public.test_place_country'];
+  public $enabled = false;
 
   public function fields()
   {

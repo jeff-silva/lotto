@@ -7,6 +7,7 @@ use App\Addon\Migrator\Migrator;
 class TestPlaceCountryMigrator extends Migrator
 {
   public $table = 'public.test_place_country';
+  public $enabled = false;
 
   public function fields()
   {
