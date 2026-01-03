@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Module\Lotto\Http\Controllers;
+namespace App\Addon\Router\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Addon\Router\RouterController;
 
-class LottoTestController extends RouterController
+class ApiController extends RouterController
 {
-  public $route = '/api/lotto/test';
+  public $route = '/api';
   public $methods = ['get'];
 
   public function __invoke(Request $request)
   {
-    return $request->all();
+    return view('addon.router::index');
   }
 }

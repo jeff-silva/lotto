@@ -43,5 +43,7 @@ class RouterServiceProvider extends ServiceProvider
       $route->name(preg_replace('/Controller$/', '', class_basename($file->class)));
       $route->middleware($c->middlewares);
     }
+
+    $this->loadViewsFrom(app_path('Addon/Router/Views'), 'addon.router');
   }
 }
