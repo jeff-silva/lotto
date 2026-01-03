@@ -1,13 +1,12 @@
 <?php
 
-namespace App\Addon\Migrator\Examples;
+namespace App\Module\Lotto\Migrator;
 
 use App\Addon\Migrator\Migrator;
 
-class TestPlaceCountryMigrator extends Migrator
+class LottoRaffleTypeMigrator extends Migrator
 {
-  public $table = 'public.test_place_country';
-  public $enabled = false;
+  public $table = 'public.lotto_raffle_type';
 
   public function fields()
   {

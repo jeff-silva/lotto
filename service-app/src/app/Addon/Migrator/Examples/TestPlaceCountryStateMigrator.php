@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Addon\Migrator\Example;
+namespace App\Addon\Migrator\Examples;
 
 use App\Addon\Migrator\Migrator;
 

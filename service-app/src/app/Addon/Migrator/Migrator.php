@@ -39,23 +39,26 @@ class Migrator
       iterator_to_array(
         (new Finder)
           ->files()
-          ->in(base_path())
-          ->exclude('vendor')
+          ->in(app_path())
           ->name('*Migrator.php')
       )
     )
+      ->map(function ($file) {
+        $file->class = $file->getRealPath();
+        $file->class = str_replace(app_path(), 'App', $file->class);
+        $file->class = preg_replace('/.php$/', '', $file->class);
+        $file->class = str_replace('/', '\\', $file->class);
+        $file->classParams = (object) (new \ReflectionClass($file->class))->getDefaultProperties();
+        return $file;
+      })
       ->filter(function ($file) {
-        return 'Migrator' != $file->getBasename('.php');
+        return is_subclass_of($file->class, Migrator::class);
+      })
+      ->filter(function ($file) {
+        return $file->classParams->enabled;
       })
       ->map(function ($file) {
-        $class = $file->getRealPath();
-        $class = str_replace(app_path(), 'App', $class);
-        $class = preg_replace('/.php$/', '', $class);
-        $class = str_replace('/', '\\', $class);
-        return app($class);
-      })
-      ->filter(function ($migrator) {
-        return $migrator->enabled;
+        return app($file->class);
       })
       ->values()
       ->toArray();
