@@ -3,12 +3,12 @@
 namespace App\Module\Lotto\Search;
 
 use App\Addon\Search\Search;
-use App\Module\Lotto\Models\LottoRaffleType;
+use App\Module\Lotto\Models\LottoRaffleDraw;
 
-class LottoRaffleTypeSearch extends Search
+class LottoRaffleDrawSearch extends Search
 {
   public function __construct(
-    public LottoRaffleType $model,
+    public LottoRaffleDraw $model,
   ) {
     return parent::__construct();
   }

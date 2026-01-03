@@ -4,6 +4,7 @@ namespace App\Module\Lotto\Http\Controllers\LottoRaffleType;
 
 use Illuminate\Http\Request;
 use App\Addon\Router\RouterController;
+use App\Module\Lotto\Search\LottoRaffleTypeSearch;
 
 class LottoRaffleTypeSearchController extends RouterController
 {
@@ -13,6 +14,11 @@ class LottoRaffleTypeSearchController extends RouterController
 
   public function __invoke(Request $request)
   {
-    return $request->all();
+    return LottoRaffleTypeSearch::make()->paginate($request->query());
+  }
+
+  public static function openApiParams()
+  {
+    return LottoRaffleTypeSearch::openApiParams();
   }
 }

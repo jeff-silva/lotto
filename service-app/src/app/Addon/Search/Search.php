@@ -62,16 +62,16 @@ class Search
     });
   }
 
-  public function options($options)
+  public function meta($meta)
   {
-    return $options;
+    return $meta;
   }
 
-  public function getOptions($params)
+  public function getMeta()
   {
-    $options = (object) [];
+    $meta = (object) [];
 
-    $options->order = [
+    $meta->order = [
       [
         'id' => 'id:asc',
         'name' => 'Primeiro > Último',
@@ -90,7 +90,7 @@ class Search
       ],
     ];
 
-    return $this->options($options);
+    return $this->meta($meta);
   }
 
   public function params()
@@ -188,9 +188,9 @@ class Search
 
   public function paginate(array $params = [])
   {
-    $scope = new Fluent([]);
+    $scope = (object) [];
     $scope->params = $this->getParams($params);
-    $scope->options = $this->getOptions($params);
+    $scope->meta = $this->getMeta($params);
 
     $query = $this->getQuery($scope->params);
     $pagination = $query->paginate($scope->params->per_page);
@@ -207,5 +207,28 @@ class Search
     // }
 
     return $scope;
+  }
+
+  static function make()
+  {
+    return app(static::class);
+  }
+
+  static function openApiParams()
+  {
+    $params = [];
+
+    foreach (static::make()->getParams() as $name => $value) {
+      $type = gettype($value);
+      if ($type == 'NULL') $type = 'string';
+
+      $params[] = [
+        'in' => 'query',
+        'name' => $name,
+        'type' => $type,
+      ];
+    }
+
+    return $params;
   }
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Module\Lotto\Http\Controllers;
+namespace App\Module\Lotto\Http\Controllers\LottoRaffleDraw;
 
 use Illuminate\Http\Request;
 use App\Addon\Router\RouterController;
+use App\Module\Lotto\Search\LottoRaffleDrawSearch;
 
 class LottoRaffleDrawSearchController extends RouterController
 {
@@ -18,11 +19,6 @@ class LottoRaffleDrawSearchController extends RouterController
 
   public static function openApiParams()
   {
-    return [
-      [
-        'name' => 'page',
-        'in' => 'query',
-      ],
-    ];
+    return LottoRaffleDrawSearch::openApiParams();
   }
 }
