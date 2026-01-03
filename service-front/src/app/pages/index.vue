@@ -14,8 +14,8 @@
         class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 lg:gap-6"
       >
         <template v-for="type in scope.lottoRaffleTypeSearch.response.data">
-          <a
-            href="#"
+          <nuxt-link
+            to="/"
             class="group block bg-white rounded-lg p-5 lg:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
           >
             <div class="flex items-center justify-between mb-4">
@@ -59,7 +59,7 @@
                 />
               </svg>
             </div>
-          </a>
+          </nuxt-link>
         </template>
       </div>
     </template>

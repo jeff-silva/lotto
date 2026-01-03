@@ -12,6 +12,7 @@ class LottoRaffleType extends Model
     'slug',
     'name',
     'color',
+    'order',
     'pool_min',
     'pool_max',
     'pool_cols',
