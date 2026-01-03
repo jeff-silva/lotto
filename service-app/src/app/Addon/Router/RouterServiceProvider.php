@@ -38,6 +38,7 @@ class RouterServiceProvider extends ServiceProvider
 
     foreach ($files as $file) {
       $c = (object) (new \ReflectionClass($file->class))->getDefaultProperties();
+      if (!$c->enabled) continue;
       $route = Route::match($c->methods, $c->route, $file->class);
       $route->name(preg_replace('/Controller$/', '', class_basename($file->class)));
       $route->middleware($c->middlewares);

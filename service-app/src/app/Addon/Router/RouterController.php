@@ -9,4 +9,5 @@ class RouterController extends Controller
   public $route = '';
   public $methods = ['get'];
   public $middlewares = [];
+  public $enabled = true;
 }
