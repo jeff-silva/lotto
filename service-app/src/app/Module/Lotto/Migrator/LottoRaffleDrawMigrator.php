@@ -16,7 +16,8 @@ class LottoRaffleDrawMigrator extends Migrator
       'type_id' => fn($table) => $table->foreignId('type_id')
         ->constrained('public.lotto_raffle_type')
         ->onUpdate('cascade')
-        ->onDelete('cascade'),
+        ->onDelete('cascade')
+        ->nullable(),
       'number' => fn($table) => $table->integer('number')->nullable(),
       'result' => fn($table) => $table->jsonb('result')->nullable(),
       'date' => fn($table) => $table->dateTime('date')->nullable(),

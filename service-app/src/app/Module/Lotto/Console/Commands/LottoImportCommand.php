@@ -21,8 +21,13 @@ class LottoImportCommand extends Command
 
   public function importMegaSena()
   {
-    $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'mega-sena'], [
+    $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'mega-sena'], []);
+
+    $lottoRaffleType->update([
       'name' => 'Mega-Sena',
+      'pool_min' => 1,
+      'pool_max' => 60,
+      'pool_cols' => 10,
     ]);
 
     $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Mega-Sena';
