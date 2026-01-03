@@ -12,6 +12,10 @@ class LottoRaffleDraw extends Model
     'type_id',
     'number',
     'result',
-    'date',
+    'drawn_at',
+  ];
+
+  protected $casts = [
+    'result' => 'json',
   ];
 }

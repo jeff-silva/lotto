@@ -46,15 +46,15 @@ class LottoImportCommand extends Command
           'number' => intval($draw[0]),
         ],
         [
-          'date' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => json_encode([
+          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
+          'result' => [
             intval($draw[2]),
             intval($draw[3]),
             intval($draw[4]),
             intval($draw[5]),
             intval($draw[6]),
             intval($draw[7]),
-          ]),
+          ],
         ]
       );
     }

@@ -12,4 +12,18 @@ class LottoRaffleDrawSearch extends Search
   ) {
     return parent::__construct();
   }
+
+  public function params()
+  {
+    return [
+      'type_id' => null,
+    ];
+  }
+
+  public function query($query, $params)
+  {
+    if ($value = $params->type_id) {
+      $query->where('type_id', $value);
+    }
+  }
 }

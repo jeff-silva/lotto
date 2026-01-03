@@ -14,7 +14,7 @@ class LottoRaffleDrawSearchController extends RouterController
 
   public function __invoke(Request $request)
   {
-    return $request->all();
+    return LottoRaffleDrawSearch::make()->paginate($request->query());
   }
 
   public static function openApiParams()
