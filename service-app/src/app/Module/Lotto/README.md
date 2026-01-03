@@ -1,5 +1,11 @@
 # Module Lotto
 
+Import results
+
+```bash
+php artisan lotto:import
+```
+
 Clear and reset database
 
 ```bash

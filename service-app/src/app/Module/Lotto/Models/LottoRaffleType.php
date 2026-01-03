@@ -11,6 +11,7 @@ class LottoRaffleType extends Model
   protected $fillable = [
     'slug',
     'name',
+    'color',
     'pool_min',
     'pool_max',
     'pool_cols',
