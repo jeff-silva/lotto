@@ -33,6 +33,8 @@ class LottoImportCommand extends Command
     $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Mega-Sena';
     $resp = Http::withoutVerifying()->get($resp);
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info('Mega-Sena: Importing ' . sizeof($draws) . ' rows');
+
     foreach ($draws as $i => $draw) {
       if ($i == 0) {
         continue;
@@ -56,5 +58,7 @@ class LottoImportCommand extends Command
         ]
       );
     }
+
+    $this->info('Mega-Sena: Finished');
   }
 }
