@@ -332,7 +332,11 @@ const scope = reactive({
 scope.lottoRaffleTypeSearch = useAxios({
   method: "get",
   url: "/api/lotto_raffle_type",
-  params: { order: "order:asc", with: "lastDraw" },
+  params: {
+    order: "order:asc",
+    with: "lastDraw",
+    per_page: 20,
+  },
   response: { data: [] },
 });
 

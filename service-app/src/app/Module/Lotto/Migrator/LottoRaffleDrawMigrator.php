@@ -20,6 +20,7 @@ class LottoRaffleDrawMigrator extends Migrator
         ->nullable(),
       'number' => fn($table) => $table->integer('number')->nullable(),
       'result' => fn($table) => $table->jsonb('result')->nullable(),
+      'raw' => fn($table) => $table->jsonb('raw')->nullable(),
       'drawn_at' => fn($table) => $table->dateTime('drawn_at')->nullable(),
       'created_at' => fn($table) => $table->dateTime('created_at'),
       'updated_at' => fn($table) => $table->dateTime('updated_at'),

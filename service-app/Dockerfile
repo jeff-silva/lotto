@@ -14,6 +14,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 RUN chown -R www-data:www-data /app
 
+COPY ./zz-custom.ini /usr/local/etc/php/conf.d/zz-custom.ini
+
 COPY ./entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 

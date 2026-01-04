@@ -12,6 +12,9 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use PhpOffice\PhpSpreadsheet\Reader\Html;
 
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\StringValueBinder;
+
 class Excel
 {
   static function fromArray(array $data = [])
@@ -76,11 +79,18 @@ class Excel
       $tempFilePath = $tempFileName . '.xlsx';
       rename($tempFileName, $tempFilePath);
       file_put_contents($tempFilePath, $raw);
-      $spreadsheet = IOFactory::load($tempFilePath);
-      $sheet = $spreadsheet->getActiveSheet();
-      return new Exporter($sheet, $spreadsheet);
-      // $data = $sheet->toArray();
+
+      $reader = new \OpenSpout\Reader\XLSX\Reader();
+      $reader->open($tempFilePath);
+      $data = [];
+      foreach ($reader->getSheetIterator() as $sheet) {
+        foreach ($sheet->getRowIterator() as $row) {
+          $data[] = $row->toArray();
+        }
+      }
+      return new Exporter2($data);
     } catch (\Exception $e) {
+      dump($e);
     }
   }
 }
@@ -118,5 +128,22 @@ class Exporter
   public function toArray()
   {
     return $this->sheet->toArray();
+  }
+}
+
+class Exporter2
+{
+  public function __construct(
+    protected array $data,
+  ) {}
+
+  public function toFile()
+  {
+    // 
+  }
+
+  public function toArray()
+  {
+    return $this->data;
   }
 }
