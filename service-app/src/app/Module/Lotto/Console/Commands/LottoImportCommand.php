@@ -29,6 +29,25 @@ class LottoImportCommand extends Command
     $this->importMaisMilionaria();
   }
 
+  public function importRaw(array $draws, LottoRaffleType $lottoRaffleType, \Closure $result)
+  {
+    foreach ($draws as $i => $draw) {
+      if ($i == 0) continue;
+
+      LottoRaffleDraw::firstOrCreate(
+        [
+          'type_id' => $lottoRaffleType->id,
+          'number' => intval($draw[0]),
+        ],
+        [
+          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
+          'raw' => $draw,
+          'result' => call_user_func($result, $draw),
+        ]
+      );
+    }
+  }
+
   public function importMegaSena()
   {
     $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'mega-sena'], []);
@@ -46,29 +65,16 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -89,38 +95,25 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-            intval($draw[8]),
-            intval($draw[9]),
-            intval($draw[10]),
-            intval($draw[11]),
-            intval($draw[12]),
-            intval($draw[13]),
-            intval($draw[14]),
-            intval($draw[15]),
-            intval($draw[16]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+        intval($draw[8]),
+        intval($draw[9]),
+        intval($draw[10]),
+        intval($draw[11]),
+        intval($draw[12]),
+        intval($draw[13]),
+        intval($draw[14]),
+        intval($draw[15]),
+        intval($draw[16]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -141,28 +134,15 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -183,43 +163,30 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-            intval($draw[8]),
-            intval($draw[9]),
-            intval($draw[10]),
-            intval($draw[11]),
-            intval($draw[12]),
-            intval($draw[13]),
-            intval($draw[14]),
-            intval($draw[15]),
-            intval($draw[16]),
-            intval($draw[17]),
-            intval($draw[18]),
-            intval($draw[19]),
-            intval($draw[20]),
-            intval($draw[21]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+        intval($draw[8]),
+        intval($draw[9]),
+        intval($draw[10]),
+        intval($draw[11]),
+        intval($draw[12]),
+        intval($draw[13]),
+        intval($draw[14]),
+        intval($draw[15]),
+        intval($draw[16]),
+        intval($draw[17]),
+        intval($draw[18]),
+        intval($draw[19]),
+        intval($draw[20]),
+        intval($draw[21]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -235,10 +202,16 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    // $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Timemania';
-    // $resp = Http::withoutVerifying()->get($resp);
-    // $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
-    // $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Timemania';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [];
+    });
+
+    $this->info("{$lottoRaffleType->name}: Finished");
   }
 
   public function importDuplaSena()
@@ -257,29 +230,16 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -295,10 +255,16 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    // $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Federal';
-    // $resp = Http::withoutVerifying()->get($resp);
-    // $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
-    // $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Federal';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [];
+    });
+
+    $this->info("{$lottoRaffleType->name}: Finished");
   }
 
   public function importLoteca()
@@ -312,10 +278,16 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    // $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Loteca';
-    // $resp = Http::withoutVerifying()->get($resp);
-    // $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
-    // $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Loteca';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
+
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [];
+    });
+
+    $this->info("{$lottoRaffleType->name}: Finished");
   }
 
   public function importDiaDeSorte()
@@ -334,30 +306,17 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-            intval($draw[8]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+        intval($draw[8]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -378,30 +337,17 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-            intval($draw[8]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+        intval($draw[8]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
@@ -422,29 +368,16 @@ class LottoImportCommand extends Command
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    foreach ($draws as $i => $draw) {
-      if ($i == 0) {
-        continue;
-      }
-
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'result' => [
-            intval($draw[2]),
-            intval($draw[3]),
-            intval($draw[4]),
-            intval($draw[5]),
-            intval($draw[6]),
-            intval($draw[7]),
-          ],
-        ]
-      );
-    }
+    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
+      return [
+        intval($draw[2]),
+        intval($draw[3]),
+        intval($draw[4]),
+        intval($draw[5]),
+        intval($draw[6]),
+        intval($draw[7]),
+      ];
+    });
 
     $this->info("{$lottoRaffleType->name}: Finished");
   }
