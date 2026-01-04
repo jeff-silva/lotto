@@ -122,6 +122,11 @@ class Search
     // 
   }
 
+  public function find($query, $params)
+  {
+    $query->where('id', $params->find);
+  }
+
   public function getQuery($params)
   {
     $query = $this->model->query();
@@ -150,7 +155,7 @@ class Search
     }
 
     if ($params->find) {
-      $query->where('id', $params->find);
+      $this->find($query, $params);
     }
 
     if ($params->limit) {

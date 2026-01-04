@@ -8,37 +8,36 @@
     ></div>
 
     <!-- Drawer Navigation -->
-    <!-- Adicionado classes responsivas: hidden lg:flex no desktop, e id para controle mobile -->
     <aside
-      class="fixed left-0 top-0 h-full w-72 bg-white shadow-xl flex-col z-50 hidden lg:flex"
+      class="fixed left-0 top-0 h-full w-64 bg-white shadow-xl flex-col z-50 hidden lg:flex"
       id="drawer-nav"
     >
       <!-- Logo/Header fixo no topo -->
       <div
-        class="flex-shrink-0 p-6 bg-gradient-to-r from-emerald-600 to-teal-600"
+        class="flex-shrink-0 p-4 bg-gradient-to-r from-emerald-600 to-teal-600"
       >
-        <h1 class="text-2xl font-bold text-white">Lotto</h1>
-        <p class="text-emerald-50 text-sm mt-1">
+        <h1 class="text-xl font-bold text-white">Lotto</h1>
+        <p class="text-emerald-50 text-xs mt-0.5">
           Seus resultados em tempo real
         </p>
       </div>
 
       <!-- Menu com scroll independente -->
-      <nav class="flex-1 overflow-y-auto p-4">
+      <nav class="flex-1 overflow-y-auto p-2">
         <!-- Seção: Links Principais -->
-        <div class="mb-6">
+        <div class="mb-3">
           <h3
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2"
+            class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3"
           >
             Principal
           </h3>
 
           <nuxt-link
             to="/"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 text-emerald-700 font-medium mb-1 transition-all hover:bg-emerald-100"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md bg-emerald-50 text-emerald-700 font-medium mb-0.5 transition-all hover:bg-emerald-100 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -55,10 +54,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -75,10 +74,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -95,10 +94,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -115,20 +114,23 @@
         </div>
 
         <!-- Seção: Loterias -->
-        <div class="mb-6">
+        <div class="mb-3">
           <h3
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2"
+            class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3"
           >
             Loterias
           </h3>
 
-          <template v-for="type in scope.lottoRaffleTypeSearch.response.data">
+          <template
+            v-for="type in scope.lottoRaffleTypeSearch.response.data"
+            :key="type.id"
+          >
             <nuxt-link
               :to="`/loteria/${type.slug}`"
-              class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
             >
               <div
-                class="w-2 h-2 rounded-full"
+                class="w-1.5 h-1.5 rounded-full"
                 :style="{ background: type.color }"
               ></div>
               {{ type.name }}
@@ -137,19 +139,19 @@
         </div>
 
         <!-- Seção: Configurações -->
-        <div class="mb-6">
+        <div class="mb-3">
           <h3
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2"
+            class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3"
           >
             Configurações
           </h3>
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -166,10 +168,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -192,19 +194,19 @@
         </div>
 
         <!-- Seção: Autenticação -->
-        <div class="mb-6">
+        <div class="mb-3">
           <h3
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2"
+            class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3"
           >
             Conta
           </h3>
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -221,10 +223,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -241,19 +243,19 @@
         </div>
 
         <!-- Seção: Ajuda -->
-        <div class="mb-4">
+        <div class="mb-2">
           <h3
-            class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3 px-2"
+            class="text-[10px] font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3"
           >
             Ajuda
           </h3>
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium mb-0.5 transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -270,10 +272,10 @@
 
           <a
             href="#"
-            class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium transition-all hover:bg-slate-50"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 font-medium transition-all hover:bg-slate-50 text-sm"
           >
             <svg
-              class="w-5 h-5"
+              class="w-4 h-4"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -292,8 +294,7 @@
     </aside>
 
     <!-- Conteúdo Principal -->
-    <!-- Adicionado padding responsivo e removido margin-left no mobile -->
-    <main class="lg:ml-72 p-4 md:p-6 lg:p-8">
+    <main class="lg:ml-64 p-4 md:p-6 lg:p-8">
       <!-- Header mobile com botão hamburguer -->
       <div class="flex items-center gap-4 mb-6 lg:hidden">
         <button
@@ -315,7 +316,7 @@
           </svg>
         </button>
         <div>
-          <h1 class="text-xl font-bold text-slate-800">Loterias Brasil</h1>
+          <h1 class="text-xl font-bold text-slate-800">Lotto</h1>
         </div>
       </div>
 
@@ -325,18 +326,12 @@
 </template>
 
 <script setup>
-const scope = reactive({
-  //
-});
+const scope = reactive({});
 
 scope.lottoRaffleTypeSearch = useAxios({
   method: "get",
   url: "/api/lotto_raffle_type",
-  params: {
-    order: "order:asc",
-    with: "lastDraw",
-    per_page: 20,
-  },
+  params: { order: "order:asc", with: "lastDraw" },
   response: { data: [] },
 });
 

@@ -3,6 +3,7 @@
 namespace App\Module\Lotto\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class LottoRaffleDraw extends Model
 {
@@ -20,4 +21,9 @@ class LottoRaffleDraw extends Model
     'result' => 'json',
     'raw' => 'json',
   ];
+
+  public function type(): HasOne
+  {
+    return $this->hasOne(LottoRaffleType::class, 'id', 'type_id');
+  }
 }

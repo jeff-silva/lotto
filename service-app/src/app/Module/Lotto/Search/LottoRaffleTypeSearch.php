@@ -12,4 +12,13 @@ class LottoRaffleTypeSearch extends Search
   ) {
     return parent::__construct();
   }
+
+  public function find($query, $params)
+  {
+    if (is_string($params->find)) {
+      $query->where('slug', $params->find);
+    } else {
+      $query->where('id', $params->find);
+    }
+  }
 }

@@ -15,7 +15,7 @@
       >
         <template v-for="type in scope.lottoRaffleTypeSearch.response.data">
           <nuxt-link
-            to="/"
+            :to="`/loteria/${type.slug}`"
             class="group block bg-white rounded-lg p-5 lg:p-6 shadow-sm hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
           >
             <div class="flex items-center justify-between mb-4">
