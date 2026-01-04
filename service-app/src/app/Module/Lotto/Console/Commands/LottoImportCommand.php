@@ -16,17 +16,17 @@ class LottoImportCommand extends Command
 
   public function handle()
   {
-    $this->importMegaSena();
+    // $this->importMegaSena();
     $this->importLotoFacil();
-    $this->importQuina();
-    $this->importLotoMania();
-    $this->importTimemania();
-    $this->importDuplaSena();
-    $this->importFederal();
-    $this->importLoteca();
-    $this->importDiaDeSorte();
-    $this->importSuperSete();
-    $this->importMaisMilionaria();
+    // $this->importQuina();
+    // $this->importLotoMania();
+    // $this->importTimemania();
+    // $this->importDuplaSena();
+    // $this->importFederal();
+    // $this->importLoteca();
+    // $this->importDiaDeSorte();
+    // $this->importSuperSete();
+    // $this->importMaisMilionaria();
   }
 
   public function importMegaSena()
@@ -44,7 +44,7 @@ class LottoImportCommand extends Command
     $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Mega-Sena';
     $resp = Http::withoutVerifying()->get($resp);
     $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
-    $this->info('Mega-Sena: Importing ' . sizeof($draws) . ' rows');
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
     foreach ($draws as $i => $draw) {
       if ($i == 0) {
@@ -76,7 +76,6 @@ class LottoImportCommand extends Command
   public function importLotoFacil()
   {
     $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'lotofacil'], []);
-
     $lottoRaffleType->update([
       'name' => 'Lotofácil',
       'color' => '#94028a',
@@ -84,12 +83,16 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Lotof%C3%A1cil';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importQuina()
   {
     $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'quina'], []);
-
     $lottoRaffleType->update([
       'name' => 'Quina',
       'color' => '#260085',
@@ -97,6 +100,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Quina';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importLotoMania()
@@ -109,6 +117,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Lotomania';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importTimemania()
@@ -121,6 +134,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Timemania';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importDuplaSena()
@@ -133,6 +151,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Dupla%20Sena';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importFederal()
@@ -145,6 +168,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Federal';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importLoteca()
@@ -157,6 +185,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Loteca';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importDiaDeSorte()
@@ -169,6 +202,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Dia%20de%20Sorte';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importSuperSete()
@@ -181,6 +219,11 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Super%20Sete';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 
   public function importMaisMilionaria()
@@ -193,5 +236,10 @@ class LottoImportCommand extends Command
       'pool_max' => 25,
       'pool_cols' => 5,
     ]);
+
+    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=+Milion%C3%A1ria';
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
   }
 }
