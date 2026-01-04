@@ -286,6 +286,8 @@
 </template>
 
 <script setup>
+const emit = defineEmits(["init"]);
+
 const scope = defineStore("layoutSite01", () => {
   const scope = reactive({});
 
@@ -299,4 +301,6 @@ const scope = defineStore("layoutSite01", () => {
   scope.lottoRaffleTypeSearch.submit();
   return scope;
 })();
+
+emit("init", scope);
 </script>
