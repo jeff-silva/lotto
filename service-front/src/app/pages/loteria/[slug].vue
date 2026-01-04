@@ -5,7 +5,7 @@
   >
     <template #default="scope">
       <template v-if="scope.lottoRaffleTypeSelect.response">
-        <div class="max-w-4xl mx-auto space-y-6">
+        <div class="max-w-6xl mx-auto space-y-6">
           <div class="flex items-center gap-3">
             <nuxt-link
               to="/"
@@ -39,26 +39,30 @@
                 </p>
               </div>
             </div>
-            <nuxt-link
-              :to="`/loteria/${scope.route.params.slug}/aposta`"
-              class="inline-flex items-center gap-2 rounded px-5 py-2.5 text-white font-semibold text-sm transition-all hover:opacity-90 shadow-sm"
-              :style="`background: ${scope.lottoRaffleTypeSelect.response.entity.color};`"
-            >
-              <svg
-                class="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
-                />
-              </svg>
-              Analisar aposta
-            </nuxt-link>
+          </div>
+
+          <!-- Tabs Navigation -->
+          <div class="border-slate-200">
+            <nav class="flex gap-6">
+              <template v-for="tab in scope.tabs">
+                <nuxt-link
+                  :to="tab.to"
+                  :class="[
+                    'pb-3 text-sm font-medium border-b-2 transition-colors',
+                    tab.active
+                      ? 'border-current'
+                      : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300',
+                  ]"
+                  :style="
+                    tab.active
+                      ? `color: ${scope.lottoRaffleTypeSelect.response.entity.color}`
+                      : ''
+                  "
+                >
+                  {{ tab.name }}
+                </nuxt-link>
+              </template>
+            </nav>
           </div>
 
           <nuxt-page :scope="scope" />
@@ -79,5 +83,20 @@ const onInit = (scope) => {
   });
 
   scope.lottoRaffleTypeSelect.submit();
+
+  scope.tabs = computed(() => {
+    return [
+      {
+        name: "Últimos resultados",
+        to: `/loteria/${scope.route.params.slug}`,
+        active: scope.route.path.split("/").at(3) == undefined,
+      },
+      {
+        name: "Analisar aposta",
+        to: `/loteria/${scope.route.params.slug}/aposta`,
+        active: scope.route.path.split("/").at(3) == "aposta",
+      },
+    ];
+  });
 };
 </script>

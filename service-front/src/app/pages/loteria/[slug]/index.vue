@@ -1,5 +1,5 @@
 <template>
-  <div class="max-w-4xl mx-auto space-y-6">
+  <div class="mx-auto space-y-6">
     <div class="bg-white border border-slate-200 rounded-md shadow-sm">
       <div
         class="border-b border-slate-200 px-6 py-4"
