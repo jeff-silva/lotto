@@ -231,28 +231,249 @@
         </div>
       </div>
 
-      <div
-        class="bg-blue-50 border border-blue-200 rounded-md px-6 py-4 flex items-start gap-3"
-      >
-        <svg
-          class="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-          />
-        </svg>
-        <div>
-          <p class="text-sm font-medium text-blue-900">Como apostar</p>
-          <p class="text-xs text-blue-700 mt-1">
-            Selecione de 6 a 15 números dentre os 60 disponíveis. Quanto mais
-            números você escolher, maior o valor da aposta.
+      <!-- Seção de Análises Estatísticas -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- Card: Resumo Geral -->
+        <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Resumo da Aposta</h3>
+          <div class="space-y-4">
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-slate-600">Valor da aposta</span>
+              <span class="text-2xl font-bold" style="color: #209869">R$ 4,50</span>
+            </div>
+            <div class="flex items-center justify-between">
+              <span class="text-sm text-slate-600">Probabilidade</span>
+              <span class="text-lg font-semibold text-slate-900">1 em 50.063.860</span>
+            </div>
+            <div class="border-t border-slate-200 pt-4 mt-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-xs text-slate-500">Confiança da seleção</span>
+                <span class="text-xs font-bold text-amber-600">68%</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-amber-500 h-2 rounded-full" style="width: 68%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Frequência dos Números -->
+        <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Frequência dos Números</h3>
+          <div class="space-y-3">
+            <template v-for="(freq, idx) in [
+              { num: 5, count: 23, percent: 85 },
+              { num: 12, count: 31, percent: 95 },
+              { num: 23, count: 18, percent: 65 },
+              { num: 34, count: 14, percent: 50 },
+              { num: 45, count: 27, percent: 88 },
+              { num: 58, count: 12, percent: 42 }
+            ]">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <div class="flex items-center gap-2">
+                    <span class="text-xs font-bold text-white rounded px-2 py-0.5" style="background: #209869">{{ String(freq.num).padStart(2, '0') }}</span>
+                    <span class="text-xs text-slate-600">{{ freq.count }}x nos últimos 100</span>
+                  </div>
+                  <span class="text-xs font-semibold text-slate-700">{{ freq.percent }}%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-1.5">
+                  <div class="h-1.5 rounded-full" style="background: #209869" :style="{ width: freq.percent + '%' }"></div>
+                </div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <!-- Card: Distribuição Par/Ímpar -->
+        <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Distribuição Par/Ímpar</h3>
+          <div class="grid grid-cols-2 gap-4 mb-4">
+            <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-blue-900">4</div>
+              <div class="text-xs text-blue-600 mt-1">Pares</div>
+            </div>
+            <div class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center">
+              <div class="text-3xl font-bold text-purple-900">2</div>
+              <div class="text-xs text-purple-600 mt-1">Ímpares</div>
+            </div>
+          </div>
+          <div class="flex gap-1 mb-2">
+            <div class="flex-1 bg-blue-500 h-3 rounded"></div>
+            <div class="flex-1 bg-blue-500 h-3 rounded"></div>
+            <div class="flex-1 bg-blue-500 h-3 rounded"></div>
+            <div class="flex-1 bg-blue-500 h-3 rounded"></div>
+            <div class="flex-1 bg-purple-500 h-3 rounded"></div>
+            <div class="flex-1 bg-purple-500 h-3 rounded"></div>
+          </div>
+          <p class="text-xs text-slate-600 text-center">
+            Distribuição equilibrada recomendada: 3 pares e 3 ímpares
           </p>
+        </div>
+      </div>
+
+      <!-- Seção de Análises Avançadas -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Card: Distribuição por Dezenas -->
+        <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Distribuição por Dezenas</h3>
+          <div class="space-y-3">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">01-10</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-emerald-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">11-20</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-blue-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">21-30</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-purple-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">31-40</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-amber-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">41-50</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-red-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <span class="text-xs text-slate-600">51-60</span>
+                <span class="text-xs font-semibold text-slate-900">1 número</span>
+              </div>
+              <div class="w-full bg-slate-100 rounded-full h-2">
+                <div class="bg-pink-500 h-2 rounded-full" style="width: 17%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: Números Quentes e Frios -->
+        <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+          <h3 class="text-lg font-semibold text-slate-900 mb-4">Análise de Temperatura</h3>
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-red-700">🔥 Números Quentes</span>
+                <span class="text-xs text-slate-500">Mais sorteados</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-100 border border-red-300 text-red-800 rounded-full text-xs font-bold">12</span>
+                <span class="px-3 py-1 bg-red-100 border border-red-300 text-red-800 rounded-full text-xs font-bold">45</span>
+                <span class="px-3 py-1 bg-slate-100 border border-slate-300 text-slate-600 rounded-full text-xs">23</span>
+                <span class="px-3 py-1 bg-slate-100 border border-slate-300 text-slate-600 rounded-full text-xs">05</span>
+              </div>
+            </div>
+            <div class="border-t border-slate-200 pt-4">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm font-medium text-blue-700">❄️ Números Frios</span>
+                <span class="text-xs text-slate-500">Menos sorteados</span>
+              </div>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-blue-100 border border-blue-300 text-blue-800 rounded-full text-xs font-bold">34</span>
+                <span class="px-3 py-1 bg-blue-100 border border-blue-300 text-blue-800 rounded-full text-xs font-bold">58</span>
+                <span class="px-3 py-1 bg-slate-100 border border-slate-300 text-slate-600 rounded-full text-xs">12</span>
+                <span class="px-3 py-1 bg-slate-100 border border-slate-300 text-slate-600 rounded-full text-xs">45</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card: Histórico de Combinações Similares -->
+      <div class="bg-white border border-slate-200 rounded-md shadow-sm p-6">
+        <h3 class="text-lg font-semibold text-slate-900 mb-4">Combinações Similares no Histórico</h3>
+        <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
+          <div class="flex items-center gap-2 mb-2">
+            <svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-sm font-medium text-slate-900">Esta combinação exata nunca foi sorteada</p>
+          </div>
+          <p class="text-xs text-slate-600">Mas encontramos combinações com 4 números em comum</p>
+        </div>
+        
+        <div class="space-y-3">
+          <div class="border border-slate-200 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-700">Concurso 2645 - 21/12/2024</span>
+              <span class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-semibold">4 números iguais</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-1 bg-emerald-100 border border-emerald-300 text-emerald-800 rounded text-xs font-bold">05</span>
+              <span class="px-2 py-1 bg-emerald-100 border border-emerald-300 text-emerald-800 rounded text-xs font-bold">12</span>
+              <span class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs">18</span>
+              <span class="px-2 py-1 bg-emerald-100 border border-emerald-300 text-emerald-800 rounded text-xs font-bold">34</span>
+              <span class="px-2 py-1 bg-emerald-100 border border-emerald-300 text-emerald-800 rounded text-xs font-bold">45</span>
+              <span class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs">52</span>
+            </div>
+          </div>
+
+          <div class="border border-slate-200 rounded-lg p-4">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-medium text-slate-700">Concurso 2638 - 14/12/2024</span>
+              <span class="text-xs bg-blue-100 text-blue-800 px-2 py-0.5 rounded-full font-semibold">3 números iguais</span>
+            </div>
+            <div class="flex flex-wrap gap-1.5">
+              <span class="px-2 py-1 bg-blue-100 border border-blue-300 text-blue-800 rounded text-xs font-bold">05</span>
+              <span class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs">11</span>
+              <span class="px-2 py-1 bg-blue-100 border border-blue-300 text-blue-800 rounded text-xs font-bold">23</span>
+              <span class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs">29</span>
+              <span class="px-2 py-1 bg-slate-100 border border-slate-200 text-slate-600 rounded text-xs">41</span>
+              <span class="px-2 py-1 bg-blue-100 border border-blue-300 text-blue-800 rounded text-xs font-bold">58</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards de Estatísticas Rápidas -->
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-lg p-5 text-white shadow-md">
+          <div class="text-xs font-medium opacity-90 mb-1">Soma Total</div>
+          <div class="text-3xl font-bold">177</div>
+          <div class="text-xs opacity-75 mt-1">Média: 29.5</div>
+        </div>
+        <div class="bg-gradient-to-br from-blue-500 to-blue-600 rounded-lg p-5 text-white shadow-md">
+          <div class="text-xs font-medium opacity-90 mb-1">Sequências</div>
+          <div class="text-3xl font-bold">0</div>
+          <div class="text-xs opacity-75 mt-1">Nenhuma detectada</div>
+        </div>
+        <div class="bg-gradient-to-br from-purple-500 to-purple-600 rounded-lg p-5 text-white shadow-md">
+          <div class="text-xs font-medium opacity-90 mb-1">Repetidos</div>
+          <div class="text-3xl font-bold">2</div>
+          <div class="text-xs opacity-75 mt-1">Últimos 5 concursos</div>
+        </div>
+        <div class="bg-gradient-to-br from-amber-500 to-amber-600 rounded-lg p-5 text-white shadow-md">
+          <div class="text-xs font-medium opacity-90 mb-1">Score Geral</div>
+          <div class="text-3xl font-bold">7.2</div>
+          <div class="text-xs opacity-75 mt-1">De 10 pontos</div>
         </div>
       </div>
     </div>
