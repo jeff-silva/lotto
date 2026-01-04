@@ -25,7 +25,7 @@
             <div class="flex items-center gap-2 flex-1">
               <div
                 class="w-1 rounded-sm self-stretch"
-                style="background: #209869"
+                :style="`background: ${lottoRaffleTypeSelect.response.entity.color};`"
               ></div>
               <div class="flex-1">
                 <h1 class="text-3xl font-semibold text-slate-900">
@@ -39,7 +39,7 @@
             <nuxt-link
               :to="`/loteria/${route.params.slug}/aposta`"
               class="inline-flex items-center gap-2 rounded px-5 py-2.5 text-white font-semibold text-sm transition-all hover:opacity-90 shadow-sm"
-              style="background: #209869"
+              :style="`background: ${lottoRaffleTypeSelect.response.entity.color};`"
             >
               <svg
                 class="w-4 h-4"

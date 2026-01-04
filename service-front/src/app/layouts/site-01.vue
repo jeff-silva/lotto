@@ -286,14 +286,17 @@
 </template>
 
 <script setup>
-const scope = reactive({});
+const scope = defineStore("layoutSite01", () => {
+  const scope = reactive({});
 
-scope.lottoRaffleTypeSearch = useAxios({
-  method: "get",
-  url: "/api/lotto_raffle_type",
-  params: { order: "order:asc", with: "lastDraw" },
-  response: { data: [] },
-});
+  scope.lottoRaffleTypeSearch = useAxios({
+    method: "get",
+    url: "/api/lotto_raffle_type",
+    params: { order: "order:asc", with: "lastDraw" },
+    response: { data: [] },
+  });
 
-scope.lottoRaffleTypeSearch.submit();
+  scope.lottoRaffleTypeSearch.submit();
+  return scope;
+})();
 </script>
