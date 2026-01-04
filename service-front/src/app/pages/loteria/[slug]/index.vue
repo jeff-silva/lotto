@@ -123,7 +123,8 @@
                 v-for="nn in lottoRaffleTypeSelect.response.entity.last_draw
                   .result"
               >
-                <div
+                <nuxt-link
+                  :to="`/loteria/${route.params.slug}/numero/${nn}`"
                   class="px-6 py-3 flex items-center gap-4 hover:bg-slate-50 transition"
                 >
                   <div
@@ -140,7 +141,7 @@
                       Último sorteio há 3 concursos • Frequência: 23%
                     </p>
                   </div>
-                </div>
+                </nuxt-link>
               </template>
             </div>
           </div>
