@@ -33,8 +33,8 @@
             Principal
           </h3>
 
-          <a
-            href="#"
+          <nuxt-link
+            to="/"
             class="flex items-center gap-3 px-4 py-3 rounded-lg bg-emerald-50 text-emerald-700 font-medium mb-1 transition-all hover:bg-emerald-100"
           >
             <svg
@@ -51,7 +51,7 @@
               />
             </svg>
             Dashboard
-          </a>
+          </nuxt-link>
 
           <a
             href="#"
@@ -123,8 +123,8 @@
           </h3>
 
           <template v-for="type in scope.lottoRaffleTypeSearch.response.data">
-            <a
-              href="#"
+            <nuxt-link
+              :to="`/loteria/${type.slug}`"
               class="flex items-center gap-3 px-4 py-3 rounded-lg text-slate-600 font-medium mb-1 transition-all hover:bg-slate-50"
             >
               <div
@@ -132,7 +132,7 @@
                 :style="{ background: type.color }"
               ></div>
               {{ type.name }}
-            </a>
+            </nuxt-link>
           </template>
         </div>
 
@@ -332,24 +332,9 @@ const scope = reactive({
 scope.lottoRaffleTypeSearch = useAxios({
   method: "get",
   url: "/api/lotto_raffle_type",
+  params: { order: "order:asc", with: "lastDraw" },
   response: { data: [] },
 });
 
 scope.lottoRaffleTypeSearch.submit();
 </script>
-
-<!-- <template>
-  <div>
-    <pre>{{ lottoRaffleTypeSearch }}</pre>
-  </div>
-</template>
-
-<script setup>
-const lottoRaffleTypeSearch = useAxios({
-  method: "get",
-  url: "/api/lotto_raffle_type",
-  response: { data: [] },
-});
-
-lottoRaffleTypeSearch.submit();
-</script> -->
