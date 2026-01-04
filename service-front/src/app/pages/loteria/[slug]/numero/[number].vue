@@ -1,24 +1,6 @@
 <template>
   <div class="max-w-7xl mx-auto space-y-6">
     <div class="flex items-center gap-3">
-      <nuxt-link
-        :to="`/loteria/${scope.route.params.slug}`"
-        class="text-slate-400 hover:text-slate-600 transition"
-      >
-        <svg
-          class="w-5 h-5"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M15 19l-7-7 7-7"
-          />
-        </svg>
-      </nuxt-link>
       <div class="flex items-center gap-3 flex-1">
         <div
           class="w-16 h-16 rounded flex items-center justify-center text-2xl font-bold text-white shadow-md"
@@ -31,7 +13,8 @@
             Análise do Número {{ scope.route.params.number }}
           </h1>
           <p class="text-sm text-slate-500 mt-1">
-            Mega-Sena • Estatísticas completas e tendências
+            {{ scope.lottoRaffleTypeSelect.response.entity.name }} •
+            Estatísticas completas e tendências
           </p>
         </div>
       </div>

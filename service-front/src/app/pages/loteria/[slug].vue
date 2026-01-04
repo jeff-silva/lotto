@@ -87,9 +87,14 @@ const onInit = (scope) => {
   scope.tabs = computed(() => {
     return [
       {
-        name: "Últimos resultados",
+        name: "Último resultado",
         to: `/loteria/${scope.route.params.slug}`,
         active: scope.route.path.split("/").at(3) == undefined,
+      },
+      {
+        name: "Sorteios",
+        to: `/loteria/${scope.route.params.slug}/sorteios`,
+        active: scope.route.path.split("/").at(3) == "sorteios",
       },
       {
         name: "Analisar aposta",

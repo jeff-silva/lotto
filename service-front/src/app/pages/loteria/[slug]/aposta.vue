@@ -7,14 +7,6 @@
       >
         <div class="flex items-center justify-between">
           <div>
-            <div class="flex items-center gap-2 mb-2">
-              <span
-                class="inline-flex items-center rounded-full text-white text-xs font-bold px-3 py-1 uppercase tracking-wide"
-                style="background: #209869"
-              >
-                Mega-Sena
-              </span>
-            </div>
             <h2 class="text-lg font-semibold text-slate-900">
               Analisador de Apostas
             </h2>
@@ -77,12 +69,12 @@
                         :class="[
                           'absolute inset-0 w-full h-full rounded border-2 font-bold text-xs transition-all',
                           [5, 12, 23, 34, 45, 58].includes((row - 1) * 10 + col)
-                            ? 'border-emerald-500 text-white hover:opacity-90'
-                            : 'border-slate-200 bg-white text-slate-700 hover:border-emerald-400 hover:bg-emerald-50 hover:text-emerald-700',
+                            ? 'text-white hover:opacity-90'
+                            : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700',
                         ]"
                         :style="
                           [5, 12, 23, 34, 45, 58].includes((row - 1) * 10 + col)
-                            ? 'background: #209869'
+                            ? `background: ${scope.lottoRaffleTypeSelect.response.entity.color}bb; border-color: ${scope.lottoRaffleTypeSelect.response.entity.color};`
                             : ''
                         "
                       >
@@ -1283,3 +1275,9 @@
     </div>
   </div>
 </template>
+
+<script setup>
+const props = defineProps({
+  scope: { type: Object, default: () => ({}) },
+});
+</script>
