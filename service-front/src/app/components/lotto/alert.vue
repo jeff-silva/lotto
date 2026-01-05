@@ -2,17 +2,16 @@
   <div
     :class="[
       `rounded-lg p-4`,
-      `bg-${meta.color}-900`,
-      `border-4 border-${meta.color}-800`,
+      `bg-${meta.color}-900/25`,
+      `border border-${meta.color}-800`,
     ]"
   >
     <div class="flex gap-3">
       <div class="flex-shrink-0">
         <icon
-          v-if="meta.icon"
           :name="meta.icon"
           size="20"
-          :style="`color: var(--color-${meta.color}-500) !important;`"
+          :class="`text-${meta.color}-500`"
         />
       </div>
       <div class="flex-1">
