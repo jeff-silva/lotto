@@ -1,16 +1,13 @@
 <template>
   <div class="space-y-4">
-    <!-- Visualizador de Sorteio com Grid de Números -->
-    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
-      <!-- Cabeçalho com informações do sorteio -->
-      <div
-        class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4"
-      >
+    <lotto-card
+      title="Sorteios"
+      subtitle="Listar todos"
+    >
+      <template #header-append>
         <div class="flex items-center gap-3">
           <button
-            @click="previousDraw"
             class="p-2 border border-slate-200 dark:border-gray-700 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            :disabled="currentDrawIndex >= mockDraws.length - 1"
           >
             <svg
               class="w-5 h-5"
@@ -40,9 +37,7 @@
           </div>
 
           <button
-            @click="nextDraw"
             class="p-2 border border-slate-200 dark:border-gray-700 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
-            :disabled="currentDrawIndex <= 0"
           >
             <svg
               class="w-5 h-5"
@@ -59,78 +54,112 @@
             </svg>
           </button>
         </div>
+      </template>
 
-        <!-- Input para ir direto ao concurso -->
-        <div class="flex items-center gap-2">
-          <label class="text-sm text-slate-600 dark:text-gray-300 whitespace-nowrap"
-            >Ir para:</label
-          >
-          <input
-            v-model="drawNumberInput"
-            @keyup.enter="goToDrawNumber"
-            type="number"
-            placeholder="Nº"
-            class="w-24 px-3 py-1.5 border border-slate-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
-          />
-          <button
-            @click="goToDrawNumber"
-            class="px-3 py-1.5 text-sm font-medium text-white rounded-lg hover:opacity-90 transition-opacity"
-            :style="`background: ${lottoColor}`"
-          >
-            Ir
-          </button>
-        </div>
-      </div>
+      <template #default>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Seletor de Números -->
+          <div class="lg:col-span-2">
+            <lotto-numbers-selector
+              :color="scope.lottoRaffleTypeSelect.response.entity.color"
+            />
+          </div>
 
-      <div class="mb-4">
-        <lotto-numbers-selector
-          :color="scope.lottoRaffleTypeSelect.response.entity.color"
-        />
-      </div>
+          <!-- Painéis de Alertas -->
+          <div class="space-y-4">
+            <h3
+              class="text-sm font-semibold text-slate-700 dark:text-gray-300 mb-4"
+            >
+              Análise dos Números
+            </h3>
 
-      <!-- Informações Adicionais do Sorteio -->
-      <div
-        class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-200 dark:border-gray-700"
-      >
-        <div class="text-center">
-          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Prêmio</p>
-          <p class="text-sm font-bold text-slate-900 dark:text-gray-100">
-            {{ currentDraw.prize }}
-          </p>
+            <lotto-alert
+              type="warning"
+              title="Número Repetido"
+              text="O número <strong>12</strong> saiu nos últimos 2 concursos consecutivos"
+            />
+            <lotto-alert
+              type="error"
+              title="Padrão Perigoso"
+              text="Números muito próximos: <strong>34, 45</strong> podem reduzir chances"
+            />
+            <lotto-alert
+              type="info"
+              title="Sugestão"
+              text="Considere incluir números acima de 40 para melhor distribuição"
+            />
+            <lotto-alert
+              type="success"
+              title="Boa Distribuição"
+              text="Números bem distribuídos entre dezenas baixas e altas"
+            />
+          </div>
         </div>
-        <div class="text-center">
-          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Ganhadores (6)</p>
-          <p
-            class="text-sm font-semibold"
-            :style="`color: ${lottoColor}`"
-          >
-            {{ currentDraw.winners }}
-          </p>
+      </template>
+
+      <template #footer>
+        <div
+          class="w-full grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-200 dark:border-gray-700"
+        >
+          <div class="text-center">
+            <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+              Prêmio
+            </p>
+            <p class="text-sm font-bold text-slate-900 dark:text-gray-100">
+              {{ currentDraw.prize }}
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+              Ganhadores (6)
+            </p>
+            <p
+              class="text-sm font-semibold"
+              :style="`color: ${lottoColor}`"
+            >
+              {{ currentDraw.winners }}
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+              Arrecadação
+            </p>
+            <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
+              {{ currentDraw.stats.revenue }}
+            </p>
+          </div>
+          <div class="text-center">
+            <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+              Status
+            </p>
+            <p
+              class="text-sm font-semibold"
+              :class="
+                currentDraw.accumulated ? 'text-red-600' : 'text-green-600'
+              "
+            >
+              {{ currentDraw.accumulated ? "Acumulou" : "Pago" }}
+            </p>
+          </div>
         </div>
-        <div class="text-center">
-          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Arrecadação</p>
-          <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
-            {{ currentDraw.stats.revenue }}
-          </p>
-        </div>
-        <div class="text-center">
-          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Status</p>
-          <p
-            class="text-sm font-semibold"
-            :class="currentDraw.accumulated ? 'text-red-600' : 'text-green-600'"
-          >
-            {{ currentDraw.accumulated ? "Acumulou" : "Pago" }}
-          </p>
-        </div>
-      </div>
-    </div>
+      </template>
+    </lotto-card>
 
     <!-- Paginação -->
-    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
+    <div
+      class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4"
+    >
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-sm text-slate-600 dark:text-gray-300">
-          Mostrando <span class="font-medium text-slate-900 dark:text-gray-100">1-10</span> de
-          <span class="font-medium text-slate-900 dark:text-gray-100">2.650</span> concursos
+          Mostrando
+          <span class="font-medium text-slate-900 dark:text-gray-100"
+            >1-10</span
+          >
+          de
+          <span class="font-medium text-slate-900 dark:text-gray-100"
+            >2.650</span
+          >
+          concursos
         </div>
         <nav class="flex items-center gap-2">
           <button
@@ -223,7 +252,9 @@
                   >
                     Concurso {{ draw.number }}
                   </span>
-                  <span class="text-xs text-slate-500 dark:text-gray-400">{{ draw.date }}</span>
+                  <span class="text-xs text-slate-500 dark:text-gray-400">{{
+                    draw.date
+                  }}</span>
                 </div>
                 <div class="text-sm text-slate-600 dark:text-gray-300">
                   <span class="font-medium">{{ draw.weekday }}</span>
@@ -255,8 +286,12 @@
               >
                 <div class="grid grid-cols-2 lg:grid-cols-1 gap-3">
                   <div>
-                    <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Prêmio</p>
-                    <p class="text-base font-bold text-slate-900 dark:text-gray-100">
+                    <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+                      Prêmio
+                    </p>
+                    <p
+                      class="text-base font-bold text-slate-900 dark:text-gray-100"
+                    >
                       {{ draw.prize }}
                     </p>
                   </div>
@@ -329,25 +364,39 @@
               class="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700 grid grid-cols-2 md:grid-cols-4 gap-3 text-center"
             >
               <div>
-                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">5 acertos</p>
-                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+                  5 acertos
+                </p>
+                <p
+                  class="text-sm font-semibold text-slate-900 dark:text-gray-100"
+                >
                   {{ draw.stats.five }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">4 acertos</p>
-                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+                  4 acertos
+                </p>
+                <p
+                  class="text-sm font-semibold text-slate-900 dark:text-gray-100"
+                >
                   {{ draw.stats.four }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Arrecadação</p>
-                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+                  Arrecadação
+                </p>
+                <p
+                  class="text-sm font-semibold text-slate-900 dark:text-gray-100"
+                >
                   {{ draw.stats.revenue }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Acumulado</p>
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
+                  Acumulado
+                </p>
                 <p
                   class="text-sm font-semibold"
                   :class="draw.accumulated ? 'text-red-600' : 'text-green-600'"
@@ -362,11 +411,20 @@
     </div>
 
     <!-- Paginação -->
-    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
+    <div
+      class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4"
+    >
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
         <div class="text-sm text-slate-600 dark:text-gray-300">
-          Mostrando <span class="font-medium text-slate-900 dark:text-gray-100">1-10</span> de
-          <span class="font-medium text-slate-900 dark:text-gray-100">2.650</span> concursos
+          Mostrando
+          <span class="font-medium text-slate-900 dark:text-gray-100"
+            >1-10</span
+          >
+          de
+          <span class="font-medium text-slate-900 dark:text-gray-100"
+            >2.650</span
+          >
+          concursos
         </div>
         <nav class="flex items-center gap-2">
           <button

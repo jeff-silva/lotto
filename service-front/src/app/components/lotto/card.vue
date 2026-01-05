@@ -20,6 +20,7 @@
             class="text-sm text-slate-600 dark:text-gray-300 mt-0.5"
           ></p>
         </div>
+        <slot name="header-append"></slot>
       </div>
     </div>
 
@@ -28,6 +29,7 @@
     </div>
 
     <div
+      v-if="slots.footer"
       class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-b-md shadow-sm"
     >
       <div
@@ -44,4 +46,6 @@ const props = defineProps({
   title: { type: String, default: null },
   subtitle: { type: String, default: null },
 });
+
+const slots = useSlots();
 </script>
