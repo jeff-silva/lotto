@@ -73,159 +73,23 @@
             <lotto-alert
               type="warning"
               title="Número Repetido"
-              text="O número <strong>12</strong> saiu nos últimos 2 concursos
-                    consecutivos"
+              text="O número <strong>12</strong> saiu nos últimos 2 concursos consecutivos"
             />
             <lotto-alert
               type="error"
-              title="title"
-              text="text"
+              title="Padrão Perigoso"
+              text="Números muito próximos: <strong>34, 45</strong> podem reduzir chances"
             />
             <lotto-alert
               type="info"
-              title="title"
-              text="text"
+              title="Sugestão"
+              text="Considere incluir números acima de 40 para melhor distribuição"
             />
             <lotto-alert
               type="success"
-              title="title"
-              text="text"
+              title="Boa Distribuição"
+              text="Números bem distribuídos entre dezenas baixas e altas"
             />
-
-            <!-- Alerta de Aviso -->
-            <div
-              class="border border-amber-200 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20 rounded-lg p-4"
-            >
-              <div class="flex gap-3">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="w-5 h-5 text-amber-600 dark:text-amber-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
-                    />
-                  </svg>
-                </div>
-                <div class="flex-1">
-                  <p
-                    class="text-xs font-semibold text-amber-900 dark:text-amber-100 mb-1"
-                  >
-                    Número Repetido
-                  </p>
-                  <p class="text-xs text-amber-800 dark:text-amber-200">
-                    O número <strong>12</strong> saiu nos últimos 2 concursos
-                    consecutivos
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Alerta de Erro -->
-            <div
-              class="border border-red-200 dark:border-red-700 bg-red-50 dark:bg-red-900/20 rounded-lg p-4"
-            >
-              <div class="flex gap-3">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="w-5 h-5 text-red-600 dark:text-red-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div class="flex-1">
-                  <p
-                    class="text-xs font-semibold text-red-900 dark:text-red-100 mb-1"
-                  >
-                    Padrão Perigoso
-                  </p>
-                  <p class="text-xs text-red-800 dark:text-red-200">
-                    Números muito próximos: <strong>34, 45</strong> podem
-                    reduzir chances
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Alerta de Dica -->
-            <div
-              class="border border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4"
-            >
-              <div class="flex gap-3">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="w-5 h-5 text-blue-600 dark:text-blue-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div class="flex-1">
-                  <p
-                    class="text-xs font-semibold text-blue-900 dark:text-blue-100 mb-1"
-                  >
-                    Sugestão
-                  </p>
-                  <p class="text-xs text-blue-800 dark:text-blue-200">
-                    Considere incluir números acima de 40 para melhor
-                    distribuição
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Alerta de Sucesso -->
-            <div
-              class="border border-emerald-200 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-4"
-            >
-              <div class="flex gap-3">
-                <div class="flex-shrink-0">
-                  <svg
-                    class="w-5 h-5 text-emerald-600 dark:text-emerald-400"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
-                  </svg>
-                </div>
-                <div class="flex-1">
-                  <p
-                    class="text-xs font-semibold text-emerald-900 dark:text-emerald-100 mb-1"
-                  >
-                    Boa Distribuição
-                  </p>
-                  <p class="text-xs text-emerald-800 dark:text-emerald-200">
-                    Números bem distribuídos entre dezenas baixas e altas
-                  </p>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </div>
