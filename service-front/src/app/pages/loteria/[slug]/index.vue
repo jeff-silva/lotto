@@ -9,7 +9,14 @@
           <!-- Seletor de Números -->
           <div class="lg:col-span-2">
             <lotto-numbers-selector
-              :color="scope.lottoRaffleTypeSelect.response.entity.color"
+              v-bind="{
+                color: scope.lottoRaffleTypeSelect.response.entity.color,
+                numbers:
+                  scope.lottoRaffleTypeSelect.response.entity.last_draw.result,
+                poolMin: scope.lottoRaffleTypeSelect.response.entity.pool_min,
+                poolMax: scope.lottoRaffleTypeSelect.response.entity.pool_max,
+                poolCols: scope.lottoRaffleTypeSelect.response.entity.pool_cols,
+              }"
             />
           </div>
 

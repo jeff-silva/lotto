@@ -58,7 +58,12 @@
             </div>
 
             <lotto-numbers-selector
-              :color="scope.lottoRaffleTypeSelect.response.entity.color"
+              v-bind="{
+                color: scope.lottoRaffleTypeSelect.response.entity.color,
+                poolMin: scope.lottoRaffleTypeSelect.response.entity.pool_min,
+                poolMax: scope.lottoRaffleTypeSelect.response.entity.pool_max,
+                poolCols: scope.lottoRaffleTypeSelect.response.entity.pool_cols,
+              }"
             />
           </div>
 

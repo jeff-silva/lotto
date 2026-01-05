@@ -7,31 +7,15 @@
       <template v-if="scope.lottoRaffleTypeSelect.response">
         <div class="max-w-6xl mx-auto space-y-6">
           <div class="flex items-center gap-3">
-            <nuxt-link
-              to="/"
-              class="text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:text-gray-300 dark:hover:text-gray-300 transition"
-            >
-              <svg
-                class="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </nuxt-link>
-            <div class="flex items-center gap-2 flex-1">
+            <div class="flex items-center gap-3 flex-1">
               <div
                 class="w-1 rounded-sm self-stretch"
                 :style="`background: ${scope.lottoRaffleTypeSelect.response.entity.color};`"
               ></div>
               <div class="flex-1">
-                <h1 class="text-3xl font-semibold text-slate-900 dark:text-gray-100">
+                <h1
+                  class="text-3xl font-semibold text-slate-900 dark:text-gray-100"
+                >
                   {{ scope.lottoRaffleTypeSelect.response.entity.name }}
                 </h1>
                 <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">

@@ -37,7 +37,7 @@
 <script setup>
 const props = defineProps({
   color: { type: String, default: "#000000" },
-  numbers: { type: Array, default: [2, 4, 6, 8, 10] },
+  numbers: { type: Array, default: [] },
   poolMin: { type: Number, default: 1 },
   poolMax: { type: Number, default: 60 },
   poolCols: { type: Number, default: 10 },
