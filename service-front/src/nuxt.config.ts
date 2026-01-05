@@ -9,6 +9,16 @@ export default defineNuxtConfig({
     ["@nuxt/icon", {}],
     ["@nuxt/scripts", {}],
     ["@pinia/nuxt", {}],
+    [
+      "@nuxtjs/supabase",
+      {
+        redirectOptions: {
+          login: "/auth",
+          callback: "/auth/confirm",
+          exclude: ["/auth/**"],
+        },
+      },
+    ],
   ],
 
   app: {
