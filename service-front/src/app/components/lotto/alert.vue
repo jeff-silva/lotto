@@ -1,6 +1,10 @@
 <template>
   <div
-    :class="`border border-${meta.color}-200 dark:border-${meta.color}-700 bg-${meta.color}-50 dark:bg-${meta.color}-900/20 rounded-lg p-4`"
+    :class="[
+      `rounded-lg p-4`,
+      `bg-${meta.color}-900`,
+      `border-4 border-${meta.color}-800`,
+    ]"
   >
     <div class="flex gap-3">
       <div class="flex-shrink-0">
@@ -30,7 +34,6 @@
 <script setup>
 const props = defineProps({
   type: { type: String, default: "success" },
-  color: { type: String, default: "red" },
   title: { type: String, default: null },
   text: { type: String, default: null },
 });
