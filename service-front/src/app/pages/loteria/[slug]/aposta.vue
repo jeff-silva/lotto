@@ -50,41 +50,9 @@
               </div>
             </div>
 
-            <table class="w-full border-collapse">
-              <tbody>
-                <tr
-                  v-for="row in 6"
-                  :key="row"
-                >
-                  <td
-                    v-for="col in 10"
-                    :key="col"
-                    class="p-0.5 w-[10%]"
-                  >
-                    <div
-                      class="relative w-full"
-                      style="padding-bottom: 100%"
-                    >
-                      <button
-                        :class="[
-                          'absolute inset-0 w-full h-full rounded border-2 font-bold text-xs transition-all',
-                          [5, 12, 23, 34, 45, 58].includes((row - 1) * 10 + col)
-                            ? 'text-white hover:opacity-90'
-                            : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700',
-                        ]"
-                        :style="
-                          [5, 12, 23, 34, 45, 58].includes((row - 1) * 10 + col)
-                            ? `background: ${scope.lottoRaffleTypeSelect.response.entity.color}bb; border-color: ${scope.lottoRaffleTypeSelect.response.entity.color};`
-                            : ''
-                        "
-                      >
-                        {{ String((row - 1) * 10 + col).padStart(2, "0") }}
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <lotto-numbers-selector
+              :color="scope.lottoRaffleTypeSelect.response.entity.color"
+            />
           </div>
 
           <!-- Painéis de Alertas -->
