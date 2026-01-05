@@ -24,6 +24,45 @@
         </p>
       </div>
 
+      <!-- User Info Section (when logged in) -->
+      <div
+        v-if="user"
+        class="flex-shrink-0 p-3 border-b border-slate-200 dark:border-gray-700 bg-slate-50 dark:bg-gray-700/50"
+      >
+        <div class="flex items-center gap-3">
+          <!-- Default Avatar -->
+          <div
+            class="w-10 h-10 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0"
+          >
+            <svg
+              class="w-5 h-5 text-white"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"
+              />
+            </svg>
+          </div>
+
+          <!-- User Details -->
+          <div class="flex-1 min-w-0">
+            <div
+              class="text-sm font-semibold text-slate-800 dark:text-gray-100 truncate"
+            >
+              {{
+                user.user_metadata?.full_name ||
+                user.email?.split("@")[0] ||
+                "Usuário"
+              }}
+            </div>
+            <div class="text-xs text-slate-500 dark:text-gray-400 truncate">
+              {{ user.email }}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Menu com scroll independente -->
       <nav class="flex-1 overflow-y-auto p-2">
         <!-- Seção: Links Principais -->
@@ -163,45 +202,90 @@
             Conta
           </h3>
 
-          <a
-            href="#"
-            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          <template v-if="user">
+            <a
+              href="#"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
-            Meu Perfil
-          </a>
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                />
+              </svg>
+              Meu Perfil
+            </a>
 
-          <a
-            href="#"
-            class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
-          >
-            <svg
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <a
+              href="#"
+              @click="handleLogout"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
             >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-              />
-            </svg>
-            Sair
-          </a>
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              Sair
+            </a>
+          </template>
+
+          <template v-else>
+            <NuxtLink
+              to="/auth"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              Entrar
+            </NuxtLink>
+
+            <NuxtLink
+              to="/auth/register"
+              class="flex items-center gap-2.5 px-3 py-2 rounded-md text-slate-600 dark:text-gray-300 font-medium mb-0.5 transition-all hover:bg-slate-50 dark:hover:bg-gray-700 text-sm"
+            >
+              <svg
+                class="w-4 h-4"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+              Criar Conta
+            </NuxtLink>
+          </template>
         </div>
 
         <!-- Seção: Ajuda -->
@@ -326,6 +410,26 @@
 const emit = defineEmits(["init"]);
 
 const isDark = useState("darkMode", () => false);
+
+// User state
+const user = ref(null);
+const supabase = useSupabaseClient();
+
+// Get user on mount
+onMounted(async () => {
+  const { data } = await supabase.auth.getUser();
+  user.value = data.user;
+});
+
+// Listen for auth changes
+supabase.auth.onAuthStateChange((event, session) => {
+  user.value = session?.user || null;
+});
+
+const handleLogout = async () => {
+  await supabase.auth.signOut();
+  await navigateTo("/auth");
+};
 
 const toggleDarkMode = () => {
   isDark.value = !isDark.value;

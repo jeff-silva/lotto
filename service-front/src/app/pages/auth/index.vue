@@ -16,6 +16,7 @@ const handleLogin = async () => {
       password: password.value,
     });
     if (supabaseError) throw supabaseError;
+    await navigateTo("/");
   } catch (err: unknown) {
     error.value = err instanceof Error ? err.message : "An error occurred";
   } finally {
