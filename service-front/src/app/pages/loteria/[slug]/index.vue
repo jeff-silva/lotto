@@ -70,46 +70,7 @@
       </template>
     </lotto-card>
 
-    <div
-      v-if="scope.lottoRaffleTypeSelect.response.entity.last_draw"
-      class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
-    >
-      <div class="px-6 py-4 border-b border-slate-200 dark:border-gray-700">
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-gray-100">
-          Análise dos Números
-        </h3>
-        <p class="text-sm text-slate-500 dark:text-gray-400 mt-0.5">
-          Estatísticas detalhadas de cada número sorteado
-        </p>
-      </div>
-
-      <div class="divide-y divide-slate-200 dark:divide-gray-700">
-        <template
-          v-for="nn in scope.lottoRaffleTypeSelect.response.entity.last_draw
-            .result"
-        >
-          <nuxt-link
-            :to="`/loteria/${scope.route.params.slug}/numero/${nn}`"
-            class="px-6 py-3 flex items-center gap-4 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition"
-          >
-            <div
-              class="w-12 h-12 rounded flex items-center justify-center text-lg font-bold text-white shadow-sm flex-shrink-0"
-              :style="`background: ${scope.lottoRaffleTypeSelect.response.entity.color};`"
-            >
-              {{ nn.toString().padStart(2, "0") }}
-            </div>
-            <div class="flex-1">
-              <p class="text-sm font-medium text-slate-900 dark:text-gray-100">
-                Sorteado 23 vezes nos últimos 100 concursos
-              </p>
-              <p class="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
-                Último sorteio há 3 concursos • Frequência: 23%
-              </p>
-            </div>
-          </nuxt-link>
-        </template>
-      </div>
-    </div>
+    <lotto-numbers-analisys />
   </div>
 </template>
 
