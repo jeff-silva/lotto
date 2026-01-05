@@ -9,7 +9,7 @@
           <div class="flex items-center gap-3">
             <nuxt-link
               to="/"
-              class="text-slate-400 hover:text-slate-600 transition"
+              class="text-slate-400 dark:text-gray-500 hover:text-slate-600 dark:text-gray-300 dark:hover:text-gray-300 transition"
             >
               <svg
                 class="w-5 h-5"
@@ -31,10 +31,10 @@
                 :style="`background: ${scope.lottoRaffleTypeSelect.response.entity.color};`"
               ></div>
               <div class="flex-1">
-                <h1 class="text-3xl font-semibold text-slate-900">
+                <h1 class="text-3xl font-semibold text-slate-900 dark:text-gray-100">
                   {{ scope.lottoRaffleTypeSelect.response.entity.name }}
                 </h1>
-                <p class="text-sm text-slate-500 mt-1">
+                <p class="text-sm text-slate-500 dark:text-gray-400 mt-1">
                   A maior loteria do Brasil com prêmios que podem mudar sua vida
                 </p>
               </div>
@@ -42,7 +42,7 @@
           </div>
 
           <!-- Tabs Navigation -->
-          <div class="border-slate-200">
+          <div class="border-slate-200 dark:border-gray-700">
             <nav class="flex gap-6">
               <template v-for="tab in scope.tabs">
                 <nuxt-link
@@ -51,7 +51,7 @@
                     'pb-3 text-sm font-medium border-b-2 transition-colors',
                     tab.active
                       ? 'border-current'
-                      : 'border-transparent text-slate-500 hover:text-slate-700 hover:border-slate-300',
+                      : 'border-transparent text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-400 dark:hover:text-gray-400 hover:border-slate-300 dark:hover:border-gray-500',
                   ]"
                   :style="
                     tab.active

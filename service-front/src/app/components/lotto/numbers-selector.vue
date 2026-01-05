@@ -14,7 +14,7 @@
                       'absolute inset-0 w-full h-full rounded border-2 font-bold text-xs transition-all',
                       nn.selected
                         ? 'text-white hover:opacity-90'
-                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-100 hover:text-emerald-700',
+                        : 'border-slate-200 dark:border-gray-600 bg-white dark:bg-gray-800 text-slate-700 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-700 hover:text-emerald-700 dark:hover:text-emerald-400',
                     ]"
                     :style="
                       nn.selected

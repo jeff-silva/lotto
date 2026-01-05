@@ -6,7 +6,14 @@ export default defineNuxtConfig({
   modules: [
     ["@nuxt/icon", {}],
     ["@nuxt/scripts", {}],
-    ["@nuxtjs/tailwindcss", {}],
+    [
+      "@nuxtjs/tailwindcss",
+      {
+        config: {
+          darkMode: "class",
+        },
+      },
+    ],
     ["@pinia/nuxt", {}],
   ],
 });

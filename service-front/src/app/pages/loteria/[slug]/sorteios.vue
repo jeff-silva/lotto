@@ -1,7 +1,7 @@
 <template>
   <div class="space-y-4">
     <!-- Visualizador de Sorteio com Grid de Números -->
-    <div class="bg-white border border-slate-200 rounded-md shadow-sm p-4">
+    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
       <!-- Cabeçalho com informações do sorteio -->
       <div
         class="flex flex-col sm:flex-row items-center justify-between gap-3 mb-4"
@@ -9,7 +9,7 @@
         <div class="flex items-center gap-3">
           <button
             @click="previousDraw"
-            class="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            class="p-2 border border-slate-200 dark:border-gray-700 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             :disabled="currentDrawIndex >= mockDraws.length - 1"
           >
             <svg
@@ -34,14 +34,14 @@
             >
               Concurso {{ currentDraw.number }}
             </span>
-            <p class="text-xs text-slate-600 mt-1">
+            <p class="text-xs text-slate-600 dark:text-gray-300 mt-1">
               {{ currentDraw.date }} - {{ currentDraw.weekday }}
             </p>
           </div>
 
           <button
             @click="nextDraw"
-            class="p-2 border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            class="p-2 border border-slate-200 dark:border-gray-700 rounded-lg hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
             :disabled="currentDrawIndex <= 0"
           >
             <svg
@@ -62,7 +62,7 @@
 
         <!-- Input para ir direto ao concurso -->
         <div class="flex items-center gap-2">
-          <label class="text-sm text-slate-600 whitespace-nowrap"
+          <label class="text-sm text-slate-600 dark:text-gray-300 whitespace-nowrap"
             >Ir para:</label
           >
           <input
@@ -70,7 +70,7 @@
             @keyup.enter="goToDrawNumber"
             type="number"
             placeholder="Nº"
-            class="w-24 px-3 py-1.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
+            class="w-24 px-3 py-1.5 border border-slate-200 dark:border-gray-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-emerald-400"
           />
           <button
             @click="goToDrawNumber"
@@ -90,16 +90,16 @@
 
       <!-- Informações Adicionais do Sorteio -->
       <div
-        class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-200"
+        class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 border-t border-slate-200 dark:border-gray-700"
       >
         <div class="text-center">
-          <p class="text-xs text-slate-500 mb-0.5">Prêmio</p>
-          <p class="text-sm font-bold text-slate-900">
+          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Prêmio</p>
+          <p class="text-sm font-bold text-slate-900 dark:text-gray-100">
             {{ currentDraw.prize }}
           </p>
         </div>
         <div class="text-center">
-          <p class="text-xs text-slate-500 mb-0.5">Ganhadores (6)</p>
+          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Ganhadores (6)</p>
           <p
             class="text-sm font-semibold"
             :style="`color: ${lottoColor}`"
@@ -108,13 +108,13 @@
           </p>
         </div>
         <div class="text-center">
-          <p class="text-xs text-slate-500 mb-0.5">Arrecadação</p>
-          <p class="text-sm font-semibold text-slate-900">
+          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Arrecadação</p>
+          <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
             {{ currentDraw.stats.revenue }}
           </p>
         </div>
         <div class="text-center">
-          <p class="text-xs text-slate-500 mb-0.5">Status</p>
+          <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Status</p>
           <p
             class="text-sm font-semibold"
             :class="currentDraw.accumulated ? 'text-red-600' : 'text-green-600'"
@@ -126,15 +126,15 @@
     </div>
 
     <!-- Paginação -->
-    <div class="bg-white border border-slate-200 rounded-md shadow-sm p-4">
+    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-sm text-slate-600">
-          Mostrando <span class="font-medium text-slate-900">1-10</span> de
-          <span class="font-medium text-slate-900">2.650</span> concursos
+        <div class="text-sm text-slate-600 dark:text-gray-300">
+          Mostrando <span class="font-medium text-slate-900 dark:text-gray-100">1-10</span> de
+          <span class="font-medium text-slate-900 dark:text-gray-100">2.650</span> concursos
         </div>
         <nav class="flex items-center gap-2">
           <button
-            class="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-3 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-400 dark:text-gray-500 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled
           >
             <svg
@@ -164,23 +164,23 @@
             1
           </button>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             2
           </button>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             3
           </button>
-          <span class="px-2 text-slate-400">...</span>
+          <span class="px-2 text-slate-400 dark:text-gray-500">...</span>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             265
           </button>
           <button
-            class="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-3 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             <svg
               class="w-4 h-4"
@@ -207,7 +207,7 @@
         :key="draw.id"
       >
         <div
-          class="bg-white border border-slate-200 rounded-md shadow-sm hover:shadow-md transition-shadow overflow-hidden"
+          class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm hover:shadow-md transition-shadow overflow-hidden"
         >
           <div class="p-4">
             <div class="flex flex-col lg:flex-row lg:items-center gap-4">
@@ -223,9 +223,9 @@
                   >
                     Concurso {{ draw.number }}
                   </span>
-                  <span class="text-xs text-slate-500">{{ draw.date }}</span>
+                  <span class="text-xs text-slate-500 dark:text-gray-400">{{ draw.date }}</span>
                 </div>
-                <div class="text-sm text-slate-600">
+                <div class="text-sm text-slate-600 dark:text-gray-300">
                   <span class="font-medium">{{ draw.weekday }}</span>
                 </div>
               </div>
@@ -251,17 +251,17 @@
 
               <!-- Prêmio e Ganhadores -->
               <div
-                class="flex-shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 pt-3 lg:pt-0 lg:pl-4"
+                class="flex-shrink-0 border-t lg:border-t-0 lg:border-l border-slate-200 dark:border-gray-700 pt-3 lg:pt-0 lg:pl-4"
               >
                 <div class="grid grid-cols-2 lg:grid-cols-1 gap-3">
                   <div>
-                    <p class="text-xs text-slate-500 mb-0.5">Prêmio</p>
-                    <p class="text-base font-bold text-slate-900">
+                    <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Prêmio</p>
+                    <p class="text-base font-bold text-slate-900 dark:text-gray-100">
                       {{ draw.prize }}
                     </p>
                   </div>
                   <div>
-                    <p class="text-xs text-slate-500 mb-0.5">
+                    <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">
                       Ganhadores (6 acertos)
                     </p>
                     <p
@@ -280,7 +280,7 @@
               <!-- Ações -->
               <div class="flex-shrink-0 flex lg:flex-col gap-1.5">
                 <button
-                  class="flex-1 lg:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                  class="flex-1 lg:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-gray-700 rounded-lg text-xs font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors"
                 >
                   <svg
                     class="w-3.5 h-3.5"
@@ -304,7 +304,7 @@
                   Detalhes
                 </button>
                 <button
-                  class="flex-1 lg:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors"
+                  class="flex-1 lg:flex-none inline-flex items-center justify-center gap-1.5 px-3 py-1.5 border border-slate-200 dark:border-gray-700 rounded-lg text-xs font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition-colors"
                 >
                   <svg
                     class="w-3.5 h-3.5"
@@ -326,28 +326,28 @@
 
             <!-- Estatísticas Expandidas (opcional) -->
             <div
-              class="mt-3 pt-3 border-t border-slate-200 grid grid-cols-2 md:grid-cols-4 gap-3 text-center"
+              class="mt-3 pt-3 border-t border-slate-200 dark:border-gray-700 grid grid-cols-2 md:grid-cols-4 gap-3 text-center"
             >
               <div>
-                <p class="text-xs text-slate-500 mb-0.5">5 acertos</p>
-                <p class="text-sm font-semibold text-slate-900">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">5 acertos</p>
+                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
                   {{ draw.stats.five }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 mb-0.5">4 acertos</p>
-                <p class="text-sm font-semibold text-slate-900">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">4 acertos</p>
+                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
                   {{ draw.stats.four }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 mb-0.5">Arrecadação</p>
-                <p class="text-sm font-semibold text-slate-900">
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Arrecadação</p>
+                <p class="text-sm font-semibold text-slate-900 dark:text-gray-100">
                   {{ draw.stats.revenue }}
                 </p>
               </div>
               <div>
-                <p class="text-xs text-slate-500 mb-0.5">Acumulado</p>
+                <p class="text-xs text-slate-500 dark:text-gray-400 mb-0.5">Acumulado</p>
                 <p
                   class="text-sm font-semibold"
                   :class="draw.accumulated ? 'text-red-600' : 'text-green-600'"
@@ -362,15 +362,15 @@
     </div>
 
     <!-- Paginação -->
-    <div class="bg-white border border-slate-200 rounded-md shadow-sm p-4">
+    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-4">
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div class="text-sm text-slate-600">
-          Mostrando <span class="font-medium text-slate-900">1-10</span> de
-          <span class="font-medium text-slate-900">2.650</span> concursos
+        <div class="text-sm text-slate-600 dark:text-gray-300">
+          Mostrando <span class="font-medium text-slate-900 dark:text-gray-100">1-10</span> de
+          <span class="font-medium text-slate-900 dark:text-gray-100">2.650</span> concursos
         </div>
         <nav class="flex items-center gap-2">
           <button
-            class="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-400 hover:bg-slate-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            class="px-3 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-400 dark:text-gray-500 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
             disabled
           >
             <svg
@@ -400,23 +400,23 @@
             1
           </button>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             2
           </button>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             3
           </button>
-          <span class="px-2 text-slate-400">...</span>
+          <span class="px-2 text-slate-400 dark:text-gray-500">...</span>
           <button
-            class="px-4 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-4 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             265
           </button>
           <button
-            class="px-3 py-2 border border-slate-200 rounded-lg text-sm font-medium text-slate-700 hover:bg-slate-50"
+            class="px-3 py-2 border border-slate-200 dark:border-gray-700 rounded-lg text-sm font-medium text-slate-700 dark:text-gray-300 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700"
           >
             <svg
               class="w-4 h-4"
