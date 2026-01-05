@@ -278,7 +278,9 @@
           </svg>
         </button>
         <div class="flex-1">
-          <h1 class="text-xl font-bold text-slate-800 dark:text-gray-100">Lotto</h1>
+          <h1 class="text-xl font-bold text-slate-800 dark:text-gray-100">
+            Lotto
+          </h1>
         </div>
         <button
           @click="toggleDarkMode"
@@ -323,7 +325,7 @@
 <script setup>
 const emit = defineEmits(["init"]);
 
-const isDark = ref(false);
+const isDark = useState("darkMode", () => false);
 
 const toggleDarkMode = () => {
   isDark.value = !isDark.value;

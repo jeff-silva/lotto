@@ -1,18 +1,34 @@
 <template>
   <div class="mx-auto space-y-6">
-    <div class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm">
+    <div
+      class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
+    >
       <div
         class="border-b border-slate-200 dark:border-gray-700 px-6 py-4"
-        style="background: linear-gradient(to right, #20986910, transparent)"
+        :style="
+          isDark
+            ? 'background: linear-gradient(to right, #20986920, transparent)'
+            : 'background: linear-gradient(to right, #20986910, transparent)'
+        "
       >
         <div class="flex items-center justify-between">
           <div>
-            <h2 class="text-lg font-semibold text-slate-900 dark:text-gray-100">Último Sorteio</h2>
-            <p class="text-sm text-slate-600 dark:text-gray-300 mt-0.5">Concurso 2650</p>
+            <h2 class="text-lg font-semibold text-slate-900 dark:text-gray-100">
+              Último Sorteio
+            </h2>
+            <p class="text-sm text-slate-600 dark:text-gray-300 mt-0.5">
+              Concurso 2650
+            </p>
           </div>
           <div class="text-right">
-            <p class="text-xs text-slate-500 dark:text-gray-400">Data do sorteio</p>
-            <p class="text-sm font-medium text-slate-700 dark:text-gray-300 mt-0.5">28/12/2024</p>
+            <p class="text-xs text-slate-500 dark:text-gray-400">
+              Data do sorteio
+            </p>
+            <p
+              class="text-sm font-medium text-slate-700 dark:text-gray-300 mt-0.5"
+            >
+              28/12/2024
+            </p>
           </div>
         </div>
       </div>
@@ -38,7 +54,9 @@
         </div>
       </div>
 
-      <div class="border-t border-slate-200 dark:border-gray-700 px-6 py-4 bg-slate-50 dark:bg-gray-700">
+      <div
+        class="border-t border-slate-200 dark:border-gray-700 px-6 py-4 bg-slate-50 dark:bg-gray-700"
+      >
         <div class="grid grid-cols-2 gap-4">
           <div>
             <p class="text-xs text-slate-500 dark:text-gray-400 mb-1">
@@ -52,8 +70,12 @@
             </p>
           </div>
           <div class="text-right">
-            <p class="text-xs text-slate-500 dark:text-gray-400 mb-1">Próximo sorteio</p>
-            <p class="text-lg font-semibold text-slate-900 dark:text-gray-100">Sábado, 20:00</p>
+            <p class="text-xs text-slate-500 dark:text-gray-400 mb-1">
+              Próximo sorteio
+            </p>
+            <p class="text-lg font-semibold text-slate-900 dark:text-gray-100">
+              Sábado, 20:00
+            </p>
           </div>
         </div>
       </div>
@@ -72,7 +94,7 @@
         </p>
       </div>
 
-      <div class="divide-y divide-slate-200">
+      <div class="divide-y divide-slate-200 dark:divide-gray-700">
         <template
           v-for="nn in scope.lottoRaffleTypeSelect.response.entity.last_draw
             .result"
@@ -106,4 +128,6 @@
 const props = defineProps({
   scope: { type: Object, default: () => ({}) },
 });
+
+const isDark = useState("darkMode", () => false);
 </script>
