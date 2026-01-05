@@ -43,19 +43,19 @@
 
           <!-- Tabs Navigation -->
           <div class="border-slate-200 dark:border-gray-700">
-            <nav class="flex gap-6">
+            <nav class="flex gap-3">
               <template v-for="tab in scope.tabs">
                 <nuxt-link
                   :to="tab.to"
                   :class="[
-                    'pb-3 text-sm font-medium border-b-2 transition-colors',
+                    'p-3 text-sm text-white font-medium border-b-2 transition-colors rounded-t-md',
                     tab.active
                       ? 'border-current'
                       : 'border-transparent text-slate-500 dark:text-gray-400 hover:text-slate-700 dark:hover:text-gray-400 dark:hover:text-gray-400 hover:border-slate-300 dark:hover:border-gray-500',
                   ]"
                   :style="
                     tab.active
-                      ? `color: ${scope.lottoRaffleTypeSelect.response.entity.color}`
+                      ? `background: ${scope.lottoRaffleTypeSelect.response.entity.color}aa;`
                       : ''
                   "
                 >
