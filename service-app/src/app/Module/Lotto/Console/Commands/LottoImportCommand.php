@@ -6,6 +6,7 @@ use App\Module\Lotto\Models\LottoRaffleDraw;
 use App\Module\Lotto\Models\LottoRaffleType;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Str;
 
 class LottoImportCommand extends Command
 {
@@ -31,21 +32,72 @@ class LottoImportCommand extends Command
 
   public function importRaw(array $draws, LottoRaffleType $lottoRaffleType, \Closure $result)
   {
+    $head = null;
     foreach ($draws as $i => $draw) {
-      if ($i == 0) continue;
+      if ($i == 0) {
+        $head = $draw;
+        continue;
+      }
 
-      LottoRaffleDraw::firstOrCreate(
-        [
-          'type_id' => $lottoRaffleType->id,
-          'number' => intval($draw[0]),
-        ],
-        [
-          'drawn_at' => join('-', array_reverse(explode('/', $draw[1]))),
-          'raw' => $draw,
-          'result' => call_user_func($result, $draw),
-        ]
-      );
+      $lottoRaffleDraw = LottoRaffleDraw::make();
+      $lottoRaffleDraw->type_id = $lottoRaffleType->id;
+      $lottoRaffleDraw->type = $lottoRaffleType->slug;
+      $lottoRaffleDraw->raw = $draw;
+      call_user_func($result, $lottoRaffleDraw, $draw);
+
+      $lottoRaffleDrawNew = LottoRaffleDraw::firstOrCreate([
+        'type_id' => $lottoRaffleDraw->type_id,
+        'number' => $lottoRaffleDraw->number,
+      ]);
+
+      $lottoRaffleDrawNew->update($lottoRaffleDraw->toArray());
     }
+  }
+
+  protected function downloadDataCaixaGov($modalidade)
+  {
+    $date_now = now()->format('Y-m-d');
+    $file_dir = app_path('/Module/Lotto/Import');
+    $file_path = (string) Str::of(urldecode($modalidade))->ascii()->slug();
+    $file_path = $file_dir . "/{$file_path}.json";
+
+    if (file_exists($file_path)) {
+      $data = file_get_contents($file_path);
+      $data = json_decode($data);
+      if ($data->last_import == $date_now) {
+        return $data->data;
+      }
+    }
+
+    $resp = "https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade={$modalidade}";
+    $resp = Http::withoutVerifying()->get($resp);
+    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $heads = $draws[0];
+    $keys = [];
+    foreach ($heads as $head) {
+      $keys[] = (string) Str::of($head)->slug()->studly()->snake();
+    }
+
+    $data = [];
+    foreach ($draws as $draw) {
+      $data_item = [];
+      foreach ($draw as $i => $value) {
+        $data_item[$keys[$i]] = $value;
+      }
+      $data[] = (object) $data_item;
+    }
+
+    if (!file_exists($file_dir)) {
+      mkdir($file_dir, 0777);
+    }
+
+    file_put_contents($file_path, json_encode([
+      'last_import' => $date_now,
+      'data' => $data,
+    ]));
+
+    chmod($file_path, 0777);
+    return $data;
   }
 
   public function importMegaSena()
@@ -60,19 +112,19 @@ class LottoImportCommand extends Command
       'pool_cols' => 10,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Mega-Sena';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Mega-Sena');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_do_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
+        intval($draw->bola6),
       ];
     });
 
@@ -90,28 +142,28 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Lotof%C3%A1cil';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Lotof%C3%A1cil');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
-        intval($draw[8]),
-        intval($draw[9]),
-        intval($draw[10]),
-        intval($draw[11]),
-        intval($draw[12]),
-        intval($draw[13]),
-        intval($draw[14]),
-        intval($draw[15]),
-        intval($draw[16]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
+        intval($draw->bola6),
+        intval($draw->bola7),
+        intval($draw->bola8),
+        intval($draw->bola9),
+        intval($draw->bola10),
+        intval($draw->bola11),
+        intval($draw->bola12),
+        intval($draw->bola13),
+        intval($draw->bola14),
+        intval($draw->bola15),
       ];
     });
 
@@ -129,18 +181,18 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Quina';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Quina');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
       ];
     });
 
@@ -158,33 +210,33 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Lotomania';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Lotomania');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
-        intval($draw[8]),
-        intval($draw[9]),
-        intval($draw[10]),
-        intval($draw[11]),
-        intval($draw[12]),
-        intval($draw[13]),
-        intval($draw[14]),
-        intval($draw[15]),
-        intval($draw[16]),
-        intval($draw[17]),
-        intval($draw[18]),
-        intval($draw[19]),
-        intval($draw[20]),
-        intval($draw[21]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
+        intval($draw->bola6),
+        intval($draw->bola7),
+        intval($draw->bola8),
+        intval($draw->bola9),
+        intval($draw->bola10),
+        intval($draw->bola11),
+        intval($draw->bola12),
+        intval($draw->bola13),
+        intval($draw->bola14),
+        intval($draw->bola15),
+        intval($draw->bola16),
+        intval($draw->bola17),
+        intval($draw->bola18),
+        intval($draw->bola19),
+        intval($draw->bola20),
       ];
     });
 
@@ -202,9 +254,7 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Timemania';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Timemania');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
     $this->importRaw($draws, $lottoRaffleType, function ($draw) {
@@ -214,6 +264,7 @@ class LottoImportCommand extends Command
     $this->info("{$lottoRaffleType->name}: Finished");
   }
 
+  // Entender formato melhor
   public function importDuplaSena()
   {
     $lottoRaffleType = LottoRaffleType::firstOrCreate(['slug' => 'dupla-sena'], []);
@@ -225,20 +276,13 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Dupla%20Sena';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Dupla%20Sena');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
-      ];
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [];
     });
 
     $this->info("{$lottoRaffleType->name}: Finished");
@@ -255,13 +299,13 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Federal';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Federal');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [];
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->extracao;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [];
     });
 
     $this->info("{$lottoRaffleType->name}: Finished");
@@ -278,9 +322,7 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Loteca';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Loteca');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
     $this->importRaw($draws, $lottoRaffleType, function ($draw) {
@@ -301,20 +343,20 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Dia%20de%20Sorte';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Dia%20de%20Sorte');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
-        intval($draw[8]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
+        intval($draw->bola6),
+        intval($draw->bola7),
       ];
     });
 
@@ -332,20 +374,20 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=Super%20Sete';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('Super%20Sete');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
-        intval($draw[8]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->coluna1),
+        intval($draw->coluna2),
+        intval($draw->coluna3),
+        intval($draw->coluna4),
+        intval($draw->coluna5),
+        intval($draw->coluna6),
+        intval($draw->coluna7),
       ];
     });
 
@@ -363,19 +405,19 @@ class LottoImportCommand extends Command
       'pool_cols' => 5,
     ]);
 
-    $resp = 'https://servicebus2.caixa.gov.br/portaldeloterias/api/resultados/download?modalidade=+Milion%C3%A1ria';
-    $resp = Http::withoutVerifying()->get($resp);
-    $draws = \App\Addon\Helper\Excel::fromContent($resp->body())->toArray();
+    $draws = $this->downloadDataCaixaGov('+Milion%C3%A1ria');
     $this->info("{$lottoRaffleType->name}: Importing " . sizeof($draws) . ' rows');
 
-    $this->importRaw($draws, $lottoRaffleType, function ($draw) {
-      return [
-        intval($draw[2]),
-        intval($draw[3]),
-        intval($draw[4]),
-        intval($draw[5]),
-        intval($draw[6]),
-        intval($draw[7]),
+    $this->importRaw($draws, $lottoRaffleType, function ($lottoRaffleDraw, $draw) {
+      $lottoRaffleDraw->number = $draw->concurso;
+      $lottoRaffleDraw->drawn_at = join('-', array_reverse(explode('/', $draw->data_sorteio)));
+      $lottoRaffleDraw->result = [
+        intval($draw->bola1),
+        intval($draw->bola2),
+        intval($draw->bola3),
+        intval($draw->bola4),
+        intval($draw->bola5),
+        intval($draw->bola6),
       ];
     });
 

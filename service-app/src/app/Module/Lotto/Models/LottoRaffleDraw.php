@@ -11,6 +11,7 @@ class LottoRaffleDraw extends Model
 
   protected $fillable = [
     'type_id',
+    'type',
     'number',
     'result',
     'raw',

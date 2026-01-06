@@ -18,6 +18,7 @@ class LottoRaffleDrawMigrator extends Migrator
         ->onUpdate('cascade')
         ->onDelete('cascade')
         ->nullable(),
+      'type' => fn($table) => $table->string('type')->nullable(),
       'number' => fn($table) => $table->integer('number')->nullable(),
       'result' => fn($table) => $table->jsonb('result')->nullable(),
       'raw' => fn($table) => $table->jsonb('raw')->nullable(),
