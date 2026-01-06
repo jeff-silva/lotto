@@ -1,7 +1,7 @@
 <script setup>
 const props = defineProps({
   color: { type: String, default: "#000000" },
-  typeId: { type: String, default: null },
+  typeId: { type: [Number, String], default: null },
   numbers: { type: Array, default: [2, 4, 6, 8, 10] },
 });
 
@@ -31,42 +31,6 @@ watch(
     class="mx-auto space-y-6"
     v-if="lottoRaffleTypeAnalisys.response"
   >
-    <!-- <div
-      class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
-    >
-      <div class="px-6 py-4 border-b border-slate-200 dark:border-gray-700">
-        <h3 class="text-lg font-semibold text-slate-900 dark:text-gray-100">
-          Análise dos Números
-        </h3>
-        <p class="text-sm text-slate-500 dark:text-gray-400 mt-0.5">
-          Estatísticas detalhadas de cada número sorteado
-        </p>
-      </div>
-
-      <div class="divide-y divide-slate-200 dark:divide-gray-700">
-        <template v-for="nn in props.numbers">
-          <div
-            class="px-6 py-3 flex items-center gap-4 hover:bg-slate-50 dark:hover:bg-gray-700 dark:bg-gray-700 transition"
-          >
-            <div
-              class="w-12 h-12 rounded flex items-center justify-center text-lg font-bold text-white shadow-sm flex-shrink-0"
-              :style="`background: ${color};`"
-            >
-              {{ nn.toString().padStart(2, "0") }}
-            </div>
-            <div class="flex-1">
-              <p class="text-sm font-medium text-slate-900 dark:text-gray-100">
-                Sorteado 23 vezes nos últimos 100 concursos
-              </p>
-              <p class="text-xs text-slate-500 dark:text-gray-400 mt-0.5">
-                Último sorteio há 3 concursos • Frequência: 23%
-              </p>
-            </div>
-          </div>
-        </template>
-      </div>
-    </div> -->
-
     <!-- Seção de Análises Estatísticas -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
       <lotto-card
@@ -249,53 +213,22 @@ watch(
         </div>
       </lotto-card>
 
-      <!-- Card: Resumo Geral -->
-      <div
-        class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-6"
+      <lotto-card
+        title="Análise dos Números"
+        subtitle="Dicas e avisos baseados na sua seleção"
       >
-        <h3
-          class="text-lg font-semibold text-slate-900 dark:text-gray-100 mb-4"
-        >
-          Resumo da Aposta
-        </h3>
         <div class="space-y-4">
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-slate-600 dark:text-gray-300"
-              >Valor da aposta</span
-            >
-            <span
-              class="text-2xl font-bold"
-              style="color: #209869"
-              >R$ 4,50</span
-            >
-          </div>
-          <div class="flex items-center justify-between">
-            <span class="text-sm text-slate-600 dark:text-gray-300"
-              >Probabilidade</span
-            >
-            <span
-              class="text-lg font-semibold text-slate-900 dark:text-gray-100"
-              >1 em 50.063.860</span
-            >
-          </div>
-          <div class="border-t border-slate-200 dark:border-gray-700 pt-4 mt-4">
-            <div class="flex items-center justify-between mb-2">
-              <span class="text-xs text-slate-500 dark:text-gray-400"
-                >Confiança da seleção</span
-              >
-              <span class="text-xs font-bold text-amber-600 dark:text-amber-400"
-                >68%</span
-              >
-            </div>
-            <div class="w-full bg-slate-100 dark:bg-gray-700 rounded-full h-2">
-              <div
-                class="bg-amber-500 h-2 rounded-full"
-                style="width: 68%"
-              ></div>
-            </div>
-          </div>
+          <template
+            v-for="tip in lottoRaffleTypeAnalisys.response.tips?.result || []"
+          >
+            <lotto-alert
+              :type="tip.type"
+              :title="tip.title"
+              :text="tip.text"
+            />
+          </template>
         </div>
-      </div>
+      </lotto-card>
 
       <!-- Card: Frequência dos Números -->
       <div
@@ -346,46 +279,6 @@ watch(
             </div>
           </template>
         </div>
-      </div>
-
-      <!-- Card: Distribuição Par/Ímpar -->
-      <div
-        class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-6"
-      >
-        <h3
-          class="text-lg font-semibold text-slate-900 dark:text-gray-100 mb-4"
-        >
-          Distribuição Par/Ímpar
-        </h3>
-        <div class="grid grid-cols-2 gap-4 mb-4">
-          <div
-            class="bg-blue-50 border border-blue-200 rounded-lg p-4 text-center"
-          >
-            <div class="text-3xl font-bold text-blue-900 dark:text-blue-100">
-              4
-            </div>
-            <div class="text-xs text-blue-600 dark:text-blue-400 mt-1">
-              Pares
-            </div>
-          </div>
-          <div
-            class="bg-purple-50 border border-purple-200 rounded-lg p-4 text-center"
-          >
-            <div class="text-3xl font-bold text-purple-900">2</div>
-            <div class="text-xs text-purple-600 mt-1">Ímpares</div>
-          </div>
-        </div>
-        <div class="flex gap-1 mb-2">
-          <div class="flex-1 bg-blue-500 h-3 rounded"></div>
-          <div class="flex-1 bg-blue-500 h-3 rounded"></div>
-          <div class="flex-1 bg-blue-500 h-3 rounded"></div>
-          <div class="flex-1 bg-blue-500 h-3 rounded"></div>
-          <div class="flex-1 bg-purple-500 h-3 rounded"></div>
-          <div class="flex-1 bg-purple-500 h-3 rounded"></div>
-        </div>
-        <p class="text-xs text-slate-600 dark:text-gray-300 text-center">
-          Distribuição equilibrada recomendada: 3 pares e 3 ímpares
-        </p>
       </div>
     </div>
 

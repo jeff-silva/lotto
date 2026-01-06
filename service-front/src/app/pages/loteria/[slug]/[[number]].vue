@@ -67,34 +67,8 @@ const route = useRoute();
             </div>
           </div>
 
-          <!-- Painéis de Alertas -->
-          <div class="space-y-4">
-            <h3
-              class="text-sm font-semibold text-slate-700 dark:text-gray-300 mb-4"
-            >
-              Análise dos Números
-            </h3>
-
-            <lotto-alert
-              type="warning"
-              title="Número Repetido"
-              text="O número <strong>12</strong> saiu nos últimos 2 concursos consecutivos"
-            />
-            <lotto-alert
-              type="error"
-              title="Padrão Perigoso"
-              text="Números muito próximos: <strong>34, 45</strong> podem reduzir chances"
-            />
-            <lotto-alert
-              type="info"
-              title="Sugestão"
-              text="Considere incluir números acima de 40 para melhor distribuição"
-            />
-            <lotto-alert
-              type="success"
-              title="Boa Distribuição"
-              text="Números bem distribuídos entre dezenas baixas e altas"
-            />
+          <div class="border border-slate-900">
+            <div>&nbsp;</div>
           </div>
         </div>
       </template>

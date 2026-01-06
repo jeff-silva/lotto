@@ -58,6 +58,7 @@
             </div>
 
             <lotto-numbers-selector
+              v-model:numbers="number.items"
               v-bind="{
                 color: scope.lottoRaffleTypeSelect.response.entity.color,
                 poolMin: scope.lottoRaffleTypeSelect.response.entity.pool_min,
@@ -100,12 +101,19 @@
       </div>
     </div>
 
-    <lotto-numbers-analisys />
+    <lotto-numbers-analisys
+      :numbers="number.items"
+      :type-id="scope.lottoRaffleTypeSelect.response.entity.id"
+    />
   </div>
 </template>
 
 <script setup>
 const props = defineProps({
   scope: { type: Object, default: () => ({}) },
+});
+
+const number = reactive({
+  items: [],
 });
 </script>

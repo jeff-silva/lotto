@@ -21,6 +21,7 @@
                         ? `background: ${color}bb; border-color: ${color};`
                         : ''
                     "
+                    @click="clickHandler(nn.number)"
                   >
                     {{ String(nn.number).padStart(2, "0") }}
                   </button>
@@ -36,12 +37,15 @@
 
 <script setup>
 const props = defineProps({
+  readonly: { type: Boolean, default: false },
   color: { type: String, default: "#000000" },
   numbers: { type: Array, default: [] },
   poolMin: { type: Number, default: 1 },
   poolMax: { type: Number, default: 60 },
   poolCols: { type: Number, default: 10 },
 });
+
+const emit = defineEmits(["update:numbers"]);
 
 const numbers = computed(() => {
   const fullPool = Array.from(
@@ -59,4 +63,15 @@ const numbers = computed(() => {
 
   return chunks;
 });
+
+const clickHandler = (number) => {
+  const numbers = [...props.numbers];
+  const index = numbers.indexOf(number);
+  if (index >= 0) {
+    numbers.splice(index, 1);
+  } else {
+    numbers.push(number);
+  }
+  emit("update:numbers", numbers);
+};
 </script>
