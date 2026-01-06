@@ -23,6 +23,10 @@ class LottoRaffleDraw extends Model
     'raw' => 'json',
   ];
 
+  protected $hidden = [
+    'raw',
+  ];
+
   public function type(): HasOne
   {
     return $this->hasOne(LottoRaffleType::class, 'id', 'type_id');

@@ -15,10 +15,10 @@ class LottoRaffleTypeSearch extends Search
 
   public function find($query, $params)
   {
-    if (is_string($params->find)) {
-      $query->where('slug', $params->find);
-    } else {
+    if (is_numeric($params->find)) {
       $query->where('id', $params->find);
+    } else {
+      $query->where('slug', $params->find);
     }
   }
 }

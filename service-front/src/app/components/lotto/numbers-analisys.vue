@@ -1,12 +1,34 @@
 <script setup>
 const props = defineProps({
   color: { type: String, default: "#000000" },
+  typeId: { type: String, default: null },
   numbers: { type: Array, default: [2, 4, 6, 8, 10] },
 });
+
+const lottoRaffleTypeAnalisys = useAxios({
+  method: "post",
+  url: "/api/lotto_raffle_type/{id}/analisys",
+  async run() {
+    if (!props.typeId) return;
+    lottoRaffleTypeAnalisys.url = `/api/lotto_raffle_type/${props.typeId}/analisys`;
+    lottoRaffleTypeAnalisys.data.numbers = props.numbers;
+    return await lottoRaffleTypeAnalisys.submit();
+  },
+});
+
+lottoRaffleTypeAnalisys.run();
+
+watch(
+  () => [props.typeId, props.numbers],
+  () => {
+    lottoRaffleTypeAnalisys.run();
+  }
+);
 </script>
 
 <template>
   <div class="mx-auto space-y-6">
+    <pre>{{ lottoRaffleTypeAnalisys.response }}</pre>
     <div
       class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
     >

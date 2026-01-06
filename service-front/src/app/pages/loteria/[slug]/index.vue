@@ -77,7 +77,10 @@
       </template>
     </lotto-card>
 
-    <lotto-numbers-analisys />
+    <lotto-numbers-analisys
+      :type-id="scope.lottoRaffleTypeSelect.response.entity.id"
+      :numbers="scope.lottoRaffleTypeSelect.response.entity.last_draw.result"
+    />
   </div>
 </template>
 
