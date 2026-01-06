@@ -2,8 +2,6 @@ import axios from "axios";
 import _ from "lodash";
 
 export default (opts = {}) => {
-  // const app = useApp();
-
   opts = {
     method: "get",
     url: "",
@@ -79,8 +77,15 @@ export default (opts = {}) => {
         }
       }
 
-      if (import.meta.dev) {
-        r.url = `http://lotto.localhost${r.url}`;
+      if (r.url.startsWith("/api")) {
+        const session = useSupabaseSession();
+        if (session?.value?.access_token) {
+          r.headers["Authorization"] = `Bearer ${session?.value?.access_token}`;
+        }
+
+        if (import.meta.dev) {
+          r.url = `http://lotto.localhost${r.url}`;
+        }
       }
 
       return {

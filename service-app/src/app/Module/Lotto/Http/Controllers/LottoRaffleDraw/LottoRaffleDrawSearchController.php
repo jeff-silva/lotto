@@ -11,6 +11,7 @@ class LottoRaffleDrawSearchController extends RouterController
   public $route = '/api/lotto_raffle_draw';
   public $methods = ['get'];
   public $tags = ['lotto_raffle_draw'];
+  public $middlewares = ['auth.supabase'];
 
   public function __invoke(Request $request)
   {

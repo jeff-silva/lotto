@@ -11,6 +11,7 @@ class LottoRaffleTypeSelectController extends RouterController
   public $route = '/api/lotto_raffle_type/{id}';
   public $methods = ['get'];
   public $tags = ['lotto_raffle_type'];
+  public $middlewares = ['auth.supabase'];
 
   public function __invoke($id, Request $request)
   {

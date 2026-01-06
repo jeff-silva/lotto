@@ -10,6 +10,7 @@ class LottoRaffleTypeUpsertController extends RouterController
   public $route = '/api/lotto_raffle_type';
   public $methods = ['post'];
   public $tags = ['lotto_raffle_type'];
+  public $middlewares = ['auth.supabase'];
 
   public function __invoke(Request $request)
   {
