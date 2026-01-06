@@ -73,34 +73,44 @@ watch(
         title="Sortudos"
         :subtitle="lottoRaffleTypeAnalisys.response.all_time_hot.name"
       >
-        <div class="grid grid-cols-1 gap-3">
-          <template
-            v-for="(times, num) in lottoRaffleTypeAnalisys.response.all_time_hot
-              .result"
-          >
-            <div
-              class="flex items-center p-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 dark:border-orange-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        <div
+          class="border border-orange-200 dark:border-orange-800 rounded-lg shadow-sm overflow-hidden"
+        >
+          <div class="flex flex-col">
+            <template
+              v-for="([num, times], index) in Object.entries(
+                lottoRaffleTypeAnalisys.response.all_time_hot.result
+              ).sort(([, a], [, b]) => b - a)"
             >
-              <div class="flex items-center gap-3 flex-1">
-                <div class="text-2xl">🔥</div>
-                <div class="flex items-center gap-2">
+              <div
+                class="flex items-center p-3 hover:bg-orange-50/50 dark:hover:bg-orange-900/10 transition-colors"
+                :class="
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-gray-800'
+                    : 'bg-slate-50 dark:bg-gray-700'
+                "
+              >
+                <div
+                  class="text-xs font-bold text-orange-600 dark:text-orange-400 mr-3 w-4"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div class="text-lg mr-3">🔥</div>
+                <div class="flex items-center flex-1">
                   <span
-                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold rounded-full shadow-sm"
+                    class="w-8 h-8 bg-gradient-to-r from-orange-400 to-red-500 text-white text-xs font-bold rounded flex items-center justify-center shadow-sm mr-3"
                   >
                     {{ String(num).padStart(2, "0") }}
                   </span>
                   <span
                     class="text-sm font-medium text-slate-700 dark:text-gray-200"
                   >
-                    {{ times }} sorteios
+                    {{ times }}x
                   </span>
                 </div>
               </div>
-              <div class="text-xs text-slate-500 dark:text-gray-400">
-                Quente
-              </div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </lotto-card>
 
@@ -108,32 +118,44 @@ watch(
         title="Azarados"
         :subtitle="lottoRaffleTypeAnalisys.response.all_time_bad.name"
       >
-        <div class="grid grid-cols-1 gap-3">
-          <template
-            v-for="(times, num, idx) in lottoRaffleTypeAnalisys.response
-              .all_time_bad.result"
-          >
-            <div
-              class="flex items-center p-3 bg-gradient-to-r from-blue-50 to-slate-50 dark:from-blue-900/20 dark:to-slate-900/20 border border-blue-200 dark:border-blue-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        <div
+          class="border border-blue-200 dark:border-blue-800 rounded-lg shadow-sm overflow-hidden"
+        >
+          <div class="flex flex-col">
+            <template
+              v-for="([num, times], index) in Object.entries(
+                lottoRaffleTypeAnalisys.response.all_time_bad.result
+              ).sort(([, a], [, b]) => b - a)"
             >
-              <div class="flex items-center gap-3 flex-1">
-                <div class="text-2xl">❄️</div>
-                <div class="flex items-center gap-2">
+              <div
+                class="flex items-center p-3 hover:bg-blue-50/50 dark:hover:bg-blue-900/10 transition-colors"
+                :class="
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-gray-800'
+                    : 'bg-slate-50 dark:bg-gray-700'
+                "
+              >
+                <div
+                  class="text-xs font-bold text-blue-600 dark:text-blue-400 mr-3 w-4"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div class="text-lg mr-3">❄️</div>
+                <div class="flex items-center flex-1">
                   <span
-                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-400 to-slate-500 text-white text-sm font-bold rounded-full shadow-sm"
+                    class="w-8 h-8 bg-gradient-to-r from-blue-400 to-slate-500 text-white text-xs font-bold rounded flex items-center justify-center shadow-sm mr-3"
                   >
                     {{ String(num).padStart(2, "0") }}
                   </span>
                   <span
                     class="text-sm font-medium text-slate-700 dark:text-gray-200"
                   >
-                    {{ times }} sorteios
+                    {{ times }}x
                   </span>
                 </div>
               </div>
-              <div class="text-xs text-slate-500 dark:text-gray-400">Frio</div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </lotto-card>
 
@@ -141,34 +163,89 @@ watch(
         title="Sorteados"
         :subtitle="lottoRaffleTypeAnalisys.response.times_drawn.name"
       >
-        <div class="grid grid-cols-1 gap-3">
-          <template
-            v-for="(times, num, idx) in lottoRaffleTypeAnalisys.response
-              .times_drawn.result"
-          >
-            <div
-              class="flex items-center p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+        <div
+          class="border border-green-200 dark:border-green-800 rounded-lg shadow-sm overflow-hidden"
+        >
+          <div class="flex flex-col">
+            <template
+              v-for="([num, times], index) in Object.entries(
+                lottoRaffleTypeAnalisys.response.times_drawn.result
+              ).sort(([, a], [, b]) => b - a)"
             >
-              <div class="flex items-center gap-3 flex-1">
-                <div class="text-2xl">🎯</div>
-                <div class="flex items-center gap-2">
+              <div
+                class="flex items-center p-3 hover:bg-green-50/50 dark:hover:bg-green-900/10 transition-colors"
+                :class="
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-gray-800'
+                    : 'bg-slate-50 dark:bg-gray-700'
+                "
+              >
+                <div
+                  class="text-xs font-bold text-green-600 dark:text-green-400 mr-3 w-4"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div class="text-lg mr-3">🎯</div>
+                <div class="flex items-center flex-1">
                   <span
-                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-sm font-bold rounded-full shadow-sm"
+                    class="w-8 h-8 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-xs font-bold rounded flex items-center justify-center shadow-sm mr-3"
                   >
                     {{ String(num).padStart(2, "0") }}
                   </span>
                   <span
                     class="text-sm font-medium text-slate-700 dark:text-gray-200"
                   >
-                    {{ times }} sorteios
+                    {{ times }}x
                   </span>
                 </div>
               </div>
-              <div class="text-xs text-slate-500 dark:text-gray-400">
-                Frequente
+            </template>
+          </div>
+        </div>
+      </lotto-card>
+
+      <lotto-card
+        title="Média de Intervalos"
+        :subtitle="lottoRaffleTypeAnalisys.response.number_avg.name"
+      >
+        <div
+          class="border border-purple-200 dark:border-purple-800 rounded-lg shadow-sm overflow-hidden"
+        >
+          <div class="flex flex-col">
+            <template
+              v-for="([num, avg], index) in Object.entries(
+                lottoRaffleTypeAnalisys.response.number_avg?.result || {}
+              ).sort(([, a], [, b]) => (a || Infinity) - (b || Infinity))"
+            >
+              <div
+                class="flex items-center p-3 hover:bg-purple-50/50 dark:hover:bg-purple-900/10 transition-colors"
+                :class="
+                  index % 2 === 0
+                    ? 'bg-white dark:bg-gray-800'
+                    : 'bg-slate-50 dark:bg-gray-700'
+                "
+              >
+                <div
+                  class="text-xs font-bold text-purple-600 dark:text-purple-400 mr-3 w-4"
+                >
+                  {{ index + 1 }}
+                </div>
+                <div class="text-lg mr-3">⏱️</div>
+                <div class="flex items-center flex-1">
+                  <span
+                    class="w-8 h-8 bg-gradient-to-r from-purple-400 to-indigo-500 text-white text-xs font-bold rounded flex items-center justify-center shadow-sm mr-3"
+                  >
+                    {{ String(num).padStart(2, "0") }}
+                  </span>
+                  <span
+                    class="text-sm font-medium text-slate-700 dark:text-gray-200"
+                  >
+                    {{ avg ? `${avg} sorteios` : "N/A" }}
+                  </span>
+                </div>
               </div>
-            </div>
-          </template>
+            </template>
+          </div>
         </div>
       </lotto-card>
 
