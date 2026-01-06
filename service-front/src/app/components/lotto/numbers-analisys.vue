@@ -27,8 +27,11 @@ watch(
 </script>
 
 <template>
-  <div class="mx-auto space-y-6">
-    <pre>{{ lottoRaffleTypeAnalisys.response }}</pre>
+  <div
+    class="mx-auto space-y-6"
+    v-if="lottoRaffleTypeAnalisys.response"
+  >
+    <!-- <pre>{{ lottoRaffleTypeAnalisys.response }}</pre> -->
     <div
       class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
     >
@@ -67,6 +70,61 @@ watch(
 
     <!-- Seção de Análises Estatísticas -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <lotto-card
+        title="Sortudos"
+        :subtitle="lottoRaffleTypeAnalisys.response.all_time_hot.name"
+      >
+        <div class="space-y-3">
+          <template
+            v-for="(times, num) in lottoRaffleTypeAnalisys.response.all_time_hot
+              .result"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-xs font-bold text-white rounded px-2 py-0.5"
+                    style="background: #209869"
+                  >
+                    {{ String(num).padStart(2, "0") }}
+                  </span>
+                  <span class="text-xs text-slate-600 dark:text-gray-300">
+                    {{ times }} vezes
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </lotto-card>
+
+      <lotto-card
+        title="Azarados"
+        :subtitle="lottoRaffleTypeAnalisys.response.all_time_bad.name"
+      >
+        <div class="space-y-3">
+          <template
+            v-for="(times, num, idx) in lottoRaffleTypeAnalisys.response
+              .all_time_bad.result"
+          >
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-2">
+                  <span
+                    class="text-xs font-bold text-white bg-red-500 rounded px-2 py-0.5"
+                  >
+                    {{ String(num).padStart(2, "0") }}
+                  </span>
+                  <span class="text-xs text-slate-600 dark:text-gray-300">
+                    {{ times }} vezes
+                  </span>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+      </lotto-card>
+
       <!-- Card: Resumo Geral -->
       <div
         class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm p-6"

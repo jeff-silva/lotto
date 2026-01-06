@@ -12,21 +12,14 @@ class LottoRaffleTypeAnalisysController extends RouterController
   public $route = '/api/lotto_raffle_type/{id}/analisys';
   public $methods = ['post'];
   public $tags = ['lotto_raffle_type'];
-  public $middlewares = ['auth.supabase'];
+  // public $middlewares = ['auth.supabase'];
 
   public function __invoke($id, Request $request)
   {
-    $scope = (object) [];
-
     $request->query->add(['find' => $id]);
-
     $lottoRaffleType = LottoRaffleTypeSearch::make()->first($request->query());
-    $scope->entity = $lottoRaffleType;
-
     $lottoRaffleTypeService = LottoRaffleTypeService::make();
-    $scope->analisys = $lottoRaffleTypeService->analisys($lottoRaffleType, $request->post('numbers', []));
-
-    return $scope;
+    return $lottoRaffleTypeService->analisys($lottoRaffleType, $request->post('numbers', []));
   }
 
   public static function openApiParams()
