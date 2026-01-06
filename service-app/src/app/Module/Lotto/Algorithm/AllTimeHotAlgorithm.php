@@ -4,7 +4,7 @@ namespace App\Module\Lotto\Algorithm;
 
 class AllTimeHotAlgorithm extends Algorithm
 {
-  public $name = 'Números mais pé-quente';
+  public $name = 'Números mais pé-quente de todos os tempos';
 
   public function handler()
   {
@@ -27,7 +27,7 @@ class AllTimeHotAlgorithm extends Algorithm
 
     $this->result = collect($result)
       ->sortByDesc('total')
-      ->take(10)
+      ->take(5)
       ->pluck('total', 'number')
       ->all();
   }

@@ -24,6 +24,7 @@ class TimesDrawnAlgorithm extends Algorithm
       }
     }
 
-    $this->result = $result;
+    $this->result = collect($result)
+      ->all();
   }
 }

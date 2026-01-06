@@ -4,7 +4,7 @@ namespace App\Module\Lotto\Algorithm;
 
 class AllTimeBadAlgorithm extends Algorithm
 {
-  public $name = 'Números mais azarões';
+  public $name = 'Números mais azarões de todos os tempos';
 
   public function handler()
   {
@@ -27,7 +27,7 @@ class AllTimeBadAlgorithm extends Algorithm
 
     $this->result = collect($result)
       ->sortBy('total')
-      ->take(10)
+      ->take(5)
       ->pluck('total', 'number')
       ->all();
   }

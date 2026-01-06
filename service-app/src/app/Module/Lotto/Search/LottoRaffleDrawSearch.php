@@ -17,6 +17,7 @@ class LottoRaffleDrawSearch extends Search
   {
     return [
       'type_id' => null,
+      'number' => null,
     ];
   }
 
@@ -24,6 +25,10 @@ class LottoRaffleDrawSearch extends Search
   {
     if ($value = $params->type_id) {
       $query->where('type_id', $value);
+    }
+
+    if ($value = $params->number) {
+      $query->where('number', $value);
     }
   }
 }

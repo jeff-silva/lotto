@@ -58,32 +58,66 @@
 
 <script setup>
 const onInit = (scope) => {
-  scope.route = useRoute();
+  const route = useRoute();
+  const router = useRouter();
 
   scope.lottoRaffleTypeSelect = useAxios({
     method: "get",
-    url: `/api/lotto_raffle_type/${scope.route.params.slug}`,
+    url: `/api/lotto_raffle_type/${route.params.slug}`,
     params: { with: "lastDraw" },
+    async run() {
+      const resp = await scope.lottoRaffleTypeSelect.submit();
+      // scope.lottoRaffleDrawSelect.params.type_id = resp.data.entity.id;
+      // if (!route.params.number) {
+      //   router.push(
+      //     `/loteria/${route.params.slug}/${resp.data?.entity?.last_draw?.number}`
+      //   );
+      // }
+
+      scope.lottoRaffleDrawSelect.run();
+      return resp;
+    },
   });
 
-  scope.lottoRaffleTypeSelect.submit();
+  scope.lottoRaffleTypeSelect.run();
+
+  scope.lottoRaffleDrawSelect = useAxios({
+    method: "get",
+    url: `/api/lotto_raffle_draw/{id}`,
+    params: {},
+    async run() {
+      if (route.params.number) {
+        scope.lottoRaffleDrawSelect.url = `/api/lotto_raffle_draw/${route.params.number}`;
+      } else if (
+        scope.lottoRaffleTypeSelect.response?.entity?.last_draw?.number
+      ) {
+        scope.lottoRaffleDrawSelect.url = `/api/lotto_raffle_draw/${scope.lottoRaffleTypeSelect.response?.entity?.last_draw?.number}`;
+      }
+      return await scope.lottoRaffleDrawSelect.submit();
+    },
+    async goto(id) {
+      if (!id) return;
+      scope.lottoRaffleDrawSelect.url = `/api/lotto_raffle_draw/${id}`;
+      return await scope.lottoRaffleDrawSelect.submit();
+    },
+  });
 
   scope.tabs = computed(() => {
     return [
       {
         name: "Último resultado",
-        to: `/loteria/${scope.route.params.slug}`,
-        active: scope.route.path.split("/").at(3) == undefined,
+        to: `/loteria/${route.params.slug}`,
+        active: route.path.split("/").at(3) == undefined,
       },
       {
         name: "Sorteios",
-        to: `/loteria/${scope.route.params.slug}/sorteios`,
-        active: scope.route.path.split("/").at(3) == "sorteios",
+        to: `/loteria/${route.params.slug}/sorteios`,
+        active: route.path.split("/").at(3) == "sorteios",
       },
       {
         name: "Analisar aposta",
-        to: `/loteria/${scope.route.params.slug}/aposta`,
-        active: scope.route.path.split("/").at(3) == "aposta",
+        to: `/loteria/${route.params.slug}/aposta`,
+        active: route.path.split("/").at(3) == "aposta",
       },
     ];
   });

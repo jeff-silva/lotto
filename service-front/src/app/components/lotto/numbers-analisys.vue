@@ -31,8 +31,7 @@ watch(
     class="mx-auto space-y-6"
     v-if="lottoRaffleTypeAnalisys.response"
   >
-    <!-- <pre>{{ lottoRaffleTypeAnalisys.response }}</pre> -->
-    <div
+    <!-- <div
       class="bg-white dark:bg-gray-800 border border-slate-200 dark:border-gray-700 rounded-md shadow-sm"
     >
       <div class="px-6 py-4 border-b border-slate-200 dark:border-gray-700">
@@ -66,7 +65,7 @@ watch(
           </div>
         </template>
       </div>
-    </div>
+    </div> -->
 
     <!-- Seção de Análises Estatísticas -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -74,24 +73,31 @@ watch(
         title="Sortudos"
         :subtitle="lottoRaffleTypeAnalisys.response.all_time_hot.name"
       >
-        <div class="space-y-3">
+        <div class="grid grid-cols-1 gap-3">
           <template
             v-for="(times, num) in lottoRaffleTypeAnalisys.response.all_time_hot
               .result"
           >
-            <div>
-              <div class="flex items-center justify-between mb-1">
+            <div
+              class="flex items-center p-3 bg-gradient-to-r from-orange-50 to-red-50 dark:from-orange-900/20 dark:to-red-900/20 border border-orange-200 dark:border-orange-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center gap-3 flex-1">
+                <div class="text-2xl">🔥</div>
                 <div class="flex items-center gap-2">
                   <span
-                    class="text-xs font-bold text-white rounded px-2 py-0.5"
-                    style="background: #209869"
+                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-orange-400 to-red-500 text-white text-sm font-bold rounded-full shadow-sm"
                   >
                     {{ String(num).padStart(2, "0") }}
                   </span>
-                  <span class="text-xs text-slate-600 dark:text-gray-300">
-                    {{ times }} vezes
+                  <span
+                    class="text-sm font-medium text-slate-700 dark:text-gray-200"
+                  >
+                    {{ times }} sorteios
                   </span>
                 </div>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-gray-400">
+                Quente
               </div>
             </div>
           </template>
@@ -102,23 +108,64 @@ watch(
         title="Azarados"
         :subtitle="lottoRaffleTypeAnalisys.response.all_time_bad.name"
       >
-        <div class="space-y-3">
+        <div class="grid grid-cols-1 gap-3">
           <template
             v-for="(times, num, idx) in lottoRaffleTypeAnalisys.response
               .all_time_bad.result"
           >
-            <div>
-              <div class="flex items-center justify-between mb-1">
+            <div
+              class="flex items-center p-3 bg-gradient-to-r from-blue-50 to-slate-50 dark:from-blue-900/20 dark:to-slate-900/20 border border-blue-200 dark:border-blue-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center gap-3 flex-1">
+                <div class="text-2xl">❄️</div>
                 <div class="flex items-center gap-2">
                   <span
-                    class="text-xs font-bold text-white bg-red-500 rounded px-2 py-0.5"
+                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-blue-400 to-slate-500 text-white text-sm font-bold rounded-full shadow-sm"
                   >
                     {{ String(num).padStart(2, "0") }}
                   </span>
-                  <span class="text-xs text-slate-600 dark:text-gray-300">
-                    {{ times }} vezes
+                  <span
+                    class="text-sm font-medium text-slate-700 dark:text-gray-200"
+                  >
+                    {{ times }} sorteios
                   </span>
                 </div>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-gray-400">Frio</div>
+            </div>
+          </template>
+        </div>
+      </lotto-card>
+
+      <lotto-card
+        title="Sorteados"
+        :subtitle="lottoRaffleTypeAnalisys.response.times_drawn.name"
+      >
+        <div class="grid grid-cols-1 gap-3">
+          <template
+            v-for="(times, num, idx) in lottoRaffleTypeAnalisys.response
+              .times_drawn.result"
+          >
+            <div
+              class="flex items-center p-3 bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 border border-green-200 dark:border-green-800 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div class="flex items-center gap-3 flex-1">
+                <div class="text-2xl">🎯</div>
+                <div class="flex items-center gap-2">
+                  <span
+                    class="inline-flex items-center px-3 py-1 bg-gradient-to-r from-green-400 to-emerald-500 text-white text-sm font-bold rounded-full shadow-sm"
+                  >
+                    {{ String(num).padStart(2, "0") }}
+                  </span>
+                  <span
+                    class="text-sm font-medium text-slate-700 dark:text-gray-200"
+                  >
+                    {{ times }} sorteios
+                  </span>
+                </div>
+              </div>
+              <div class="text-xs text-slate-500 dark:text-gray-400">
+                Frequente
               </div>
             </div>
           </template>

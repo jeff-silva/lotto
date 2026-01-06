@@ -31,4 +31,20 @@ class LottoRaffleDraw extends Model
   {
     return $this->hasOne(LottoRaffleType::class, 'id', 'type_id');
   }
+
+  public function getPrevAttribute()
+  {
+    return static::query()
+      ->where('type_id', $this->type_id)
+      ->where('number', $this->number - 1)
+      ->first();
+  }
+
+  public function getNextAttribute()
+  {
+    return static::query()
+      ->where('type_id', $this->type_id)
+      ->where('number', $this->number + 1)
+      ->first();
+  }
 }
